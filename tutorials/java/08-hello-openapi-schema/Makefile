@@ -1,16 +1,16 @@
 .PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	mvn -q compile
+	mvn compile
 
 clean:
 	mvn -q clean
 
 test:
-	mvn -q test
+	mvn test
 
 typecheck:
-	mvn -q compile
+	mvn compile
 
 e2e: build
 	@lsof -ti:4072 | xargs kill 2>/dev/null || true
@@ -21,12 +21,12 @@ e2e: build
 	@echo "E2E: PASS"
 
 fatbin:
-	mvn -q compile
+	mvn compile
 	@echo "Fat JAR:"
 	@ls -la target/*-jar-with-dependencies.jar 2>/dev/null || ls -la target/*.jar
 
 lint:
-	mvn -q compile -Xlint:all
+	mvn compile -Xlint:all
 
 autoformat:
 	@echo "Use google-java-format or spotless plugin"

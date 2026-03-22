@@ -61,7 +61,15 @@ jobs:
               echo "=== CLEAN ==="
               for d in [0-9]*/; do make -C "$d" clean 2>/dev/null || true; done
               echo "=== BUILD ==="
-              for d in [0-9]*/; do echo "--- build $d ---"; make -C "$d" build 2>&1 || true; done
+              build_failures=0
+              for d in [0-9]*/; do
+                echo "--- build $d ---"
+                if ! make -C "$d" build 2>&1; then
+                  echo "WARNING: build failed for $d"
+                  build_failures=$((build_failures+1))
+                fi
+              done
+              echo "Build: $build_failures failure(s)"
               echo ""
               echo "=== TEST ==="
               failures=0
