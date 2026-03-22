@@ -13,7 +13,7 @@ pub fn main() !void {
         "https://api.example.com/todos",
     };
 
-    const stdout = std.io.getStdOut().writer();
+    const stdout = std.fs.File.stdout();
     try stdout.print("Fetching {d} URLs concurrently...\n\n", .{urls.len});
 
     var timer = try std.time.Timer.start();

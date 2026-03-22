@@ -13,6 +13,7 @@ pub fn main() !void {
     const msg = try hello.greetAlloc(allocator, name);
     defer allocator.free(msg);
 
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("{s}\n", .{msg});
+    const stdout = std.fs.File.stdout();
+    try stdout.writeAll(msg);
+    try stdout.writeAll("\n");
 }

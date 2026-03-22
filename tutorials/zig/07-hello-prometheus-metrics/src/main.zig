@@ -2,7 +2,7 @@ const std = @import("std");
 const hello = @import("hello.zig");
 
 pub fn main() !void {
-    const stdout = std.io.getStdOut().writer();
+    const stdout = std.fs.File.stdout();
 
     var counters = [_]hello.Counter{
         .{ .name = "http_requests_total", .help = "Total number of HTTP requests" },

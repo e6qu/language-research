@@ -58,8 +58,8 @@ test_01() {
     out=$(cd raku/01-hello-world && raku -Ilib -MHello -e 'print greet("World")' 2>/dev/null)
     check "01" "raku" "$expected" "$out"
 
-    # Go — main prints multiple demos, extract first line
-    out=$(cd golang/01-hello-world && go run . 2>/dev/null | head -1 | tr -d '\n')
+    # Go
+    out=$(cd golang/01-hello-world && go run . 2>/dev/null | tr -d '\n')
     check "01" "golang" "$expected" "$out"
 
     # Rust
@@ -74,17 +74,13 @@ test_01() {
     out=$(cd clojure/01-hello-world && lein run World 2>/dev/null | tr -d '\n')
     check "01" "clojure" "$expected" "$out"
 
-    # Zig
-    if [ -d zig/01-hello-world ]; then
-        out=$(cd zig/01-hello-world && zig build 2>/dev/null && ./zig-out/bin/hello_world 2>/dev/null | tr -d '\n') || skip
-        [ -n "$out" ] && check "01" "zig" "$expected" "$out" || skip
-    fi
+    # Zig (must be pre-built via make build)
+    out=$(cd zig/01-hello-world && zig-out/bin/hello_world World 2>/dev/null | tr -d '\n')
+    check "01" "zig" "$expected" "$out"
 
-    # D — main prints multiple demos, extract first line
-    if [ -d dlang/01-hello-world ]; then
-        out=$(cd dlang/01-hello-world && ldc2 -of=/tmp/dhello source/app.d source/hello.d 2>/dev/null && /tmp/dhello 2>/dev/null | head -1 | tr -d '\n') || skip
-        [ -n "$out" ] && check "01" "dlang" "$expected" "$out" || skip
-    fi
+    # D (must be pre-built via make build)
+    out=$(cd dlang/01-hello-world && ./hello 2>/dev/null | tr -d '\n')
+    check "01" "dlang" "$expected" "$out"
 
     # Common Lisp
     out=$(cd common-lisp/01-hello-world && sbcl --noinform --non-interactive --load src/hello.lisp --eval '(format t "~A" (hello:greet "World"))' --eval '(quit)' 2>/dev/null)

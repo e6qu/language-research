@@ -10,6 +10,6 @@ pub fn main() !void {
     const json = try hello.serializeSpec(allocator, spec);
     defer allocator.free(json);
 
-    const stdout = std.io.getStdOut().writer();
-    try stdout.print("{s}\n", .{json});
+    const stdout = std.fs.File.stdout();
+    try stdout.writeAll(, .{json});
 }

@@ -3,7 +3,7 @@ const hello = @import("hello.zig");
 
 pub fn main() !void {
     const stdin = std.io.getStdIn();
-    const stdout = std.io.getStdOut().writer();
+    const stdout = std.fs.File.stdout();
 
     const items = &[_][]const u8{
         "Build something",

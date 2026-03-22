@@ -6,7 +6,7 @@ pub fn main() !void {
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    const stdout = std.io.getStdOut().writer();
+    const stdout = std.fs.File.stdout();
     const logger = hello.Logger.init(allocator, "hello-structured-logging");
 
     try logger.info(stdout, "Application started");
