@@ -16,7 +16,7 @@ func TestRoutes(t *testing.T) {
 		wantStatus int
 		wantMsg    string
 	}{
-		{"root returns hello", "/", http.StatusOK, "Hello, World!"},
+		{"root returns hello", "/", http.StatusOK, "Hello, world!"},
 		{"greet by name", "/greet/Gopher", http.StatusOK, "Hello, Gopher!"},
 		{"greet another name", "/greet/Alice", http.StatusOK, "Hello, Alice!"},
 		{"unknown path is 404", "/unknown", http.StatusNotFound, "not found"},

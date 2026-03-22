@@ -37,7 +37,7 @@ class WebServerTest {
             var req = HttpRequest.newBuilder(URI.create("http://localhost:" + port + "/")).build();
             var resp = client.send(req, HttpResponse.BodyHandlers.ofString());
             assertEquals(200, resp.statusCode());
-            assertEquals("Hello, World!", resp.body());
+            assertEquals("Hello, world!", resp.body());
         }
     }
 

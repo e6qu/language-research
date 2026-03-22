@@ -15,7 +15,7 @@ class HelloResourceTest {
             .when().get("/")
             .then()
                 .statusCode(200)
-                .body("message", is("Hello, World!"));
+                .body("message", is("Hello, world!"));
     }
 
     @Test

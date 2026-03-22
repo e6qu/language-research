@@ -14,7 +14,7 @@ func handleRoot(w http.ResponseWriter, r *http.Request) {
 		handleNotFound(w, r)
 		return
 	}
-	writeJSON(w, http.StatusOK, Response{Message: "Hello, World!"})
+	writeJSON(w, http.StatusOK, Response{Message: "Hello, world!"})
 }
 
 func handleGreet(w http.ResponseWriter, r *http.Request) {

@@ -13,7 +13,7 @@ pub struct Message {
 
 pub async fn root() -> Json<Message> {
     Json(Message {
-        message: "Hello, World!".to_string(),
+        message: "Hello, world!".to_string(),
     })
 }
 
@@ -57,7 +57,7 @@ mod tests {
         assert_eq!(resp.status(), StatusCode::OK);
         let body = resp.into_body().collect().await.unwrap().to_bytes();
         let msg: Message = serde_json::from_slice(&body).unwrap();
-        assert_eq!(msg.message, "Hello, World!");
+        assert_eq!(msg.message, "Hello, world!");
     }
 
     #[tokio::test]
