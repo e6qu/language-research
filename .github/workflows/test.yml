@@ -1,0 +1,163 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_call:
+
+env:
+  LANGUAGES: >-
+    elixir erlang elm lua tcl perl raku rust rust-wasm golang
+    java java-springboot java-quarkus clojure zig dlang c3 scheme common-lisp
+
+jobs:
+  test-lang:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        lang:
+          - elixir
+          - erlang
+          - elm
+          - lua
+          - tcl
+          - perl
+          - raku
+          - rust
+          - rust-wasm
+          - golang
+          - java
+          - java-springboot
+          - java-quarkus
+          - clojure
+          - zig
+          - dlang
+          - c3
+          - scheme
+          - common-lisp
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build tutorial environment
+        uses: docker/build-push-action@v6
+        with:
+          context: tutorials/${{ matrix.lang }}
+          file: tutorials/${{ matrix.lang }}/Dockerfile.tutorial-env
+          tags: tutorial-${{ matrix.lang }}:ci
+          load: true
+          cache-from: type=gha,scope=${{ matrix.lang }}
+          cache-to: type=gha,scope=${{ matrix.lang }},mode=max
+        continue-on-error: ${{ matrix.lang == 'c3' }}
+
+      - name: Run unit tests
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/tutorials/${{ matrix.lang }}":/tutorials \
+            -w /tutorials \
+            tutorial-${{ matrix.lang }}:ci \
+            bash -c 'failures=0; for d in [0-9]*/; do echo "=== test $d ==="; make -C "$d" test || failures=$((failures+1)); done; exit $failures'
+        continue-on-error: ${{ matrix.lang == 'c3' }}
+
+      - name: Run e2e tests
+        run: |
+          docker run --rm --network host \
+            -v "${{ github.workspace }}/tutorials/${{ matrix.lang }}":/tutorials \
+            -w /tutorials \
+            tutorial-${{ matrix.lang }}:ci \
+            bash -c 'failures=0; for d in [0-9]*/; do echo "=== e2e $d ==="; make -C "$d" e2e || failures=$((failures+1)); done; exit $failures'
+        continue-on-error: ${{ matrix.lang == 'c3' }}
+
+      - name: Collect binary sizes
+        if: always()
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/tutorials/${{ matrix.lang }}":/tutorials \
+            -w /tutorials \
+            tutorial-${{ matrix.lang }}:ci \
+            bash -c 'for d in [0-9]*/; do echo "--- $d ---"; make -C "$d" fatbin 2>&1 || true; done' \
+            > /tmp/fatbin-${{ matrix.lang }}.txt 2>&1 || true
+
+      - name: Upload binary size report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: binary-sizes-${{ matrix.lang }}
+          path: /tmp/fatbin-${{ matrix.lang }}.txt
+          retention-days: 7
+
+  consistency:
+    runs-on: ubuntu-latest
+    needs: [test-lang]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build all Docker images
+        run: |
+          cd tutorials
+          for lang in ${{ env.LANGUAGES }}; do
+            echo "=== Building $lang ==="
+            docker build -q \
+              -f "$lang/Dockerfile.tutorial-env" \
+              -t "tutorial-$lang:ci" "$lang/" || true
+          done
+
+      - name: Run consistency test
+        run: |
+          cd tutorials
+          export CI_DOCKER=1
+          ./test-consistency.sh
+
+  binary-size-comment:
+    runs-on: ubuntu-latest
+    needs: [test-lang]
+    if: github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: binary-sizes-*
+          merge-multiple: true
+          path: ./sizes
+
+      - name: Post binary size report
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const files = fs.readdirSync('./sizes').sort();
+            let table = '| Language | Details |\n|---|---|\n';
+            for (const f of files) {
+              const lang = f.replace('fatbin-','').replace('.txt','');
+              const content = fs.readFileSync(`./sizes/${f}`, 'utf8');
+              const sizes = content.match(/\d+[KMG]?\s/g) || ['N/A'];
+              table += `| ${lang} | ${sizes.slice(0,3).join(', ')} |\n`;
+            }
+            const marker = '<!-- binary-size-report -->';
+            const body = `${marker}\n## Binary Size Report\n\n${table}`;
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner, repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            const existing = comments.find(c => c.body?.includes(marker));
+            if (existing) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                comment_id: existing.id, body,
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner, repo: context.repo.repo,
+                issue_number: context.issue.number, body,
+              });
+            }

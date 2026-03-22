@@ -1,0 +1,68 @@
+name: Lint
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        lang:
+          - elixir
+          - erlang
+          - elm
+          - lua
+          - tcl
+          - perl
+          - raku
+          - rust
+          - rust-wasm
+          - golang
+          - java
+          - java-springboot
+          - java-quarkus
+          - clojure
+          - zig
+          - dlang
+          - c3
+          - scheme
+          - common-lisp
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build tutorial environment
+        uses: docker/build-push-action@v6
+        with:
+          context: tutorials/${{ matrix.lang }}
+          file: tutorials/${{ matrix.lang }}/Dockerfile.tutorial-env
+          tags: tutorial-${{ matrix.lang }}:ci
+          load: true
+          cache-from: type=gha,scope=${{ matrix.lang }}
+          cache-to: type=gha,scope=${{ matrix.lang }},mode=max
+        continue-on-error: ${{ matrix.lang == 'c3' }}
+
+      - name: Lint
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/tutorials/${{ matrix.lang }}":/tutorials \
+            -w /tutorials \
+            tutorial-${{ matrix.lang }}:ci \
+            bash -c 'for d in [0-9]*/; do echo "=== lint $d ==="; make -C "$d" lint 2>&1 || true; done'
+        continue-on-error: true
+
+      - name: Format check
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/tutorials/${{ matrix.lang }}":/tutorials \
+            -w /tutorials \
+            tutorial-${{ matrix.lang }}:ci \
+            bash -c 'for d in [0-9]*/; do echo "=== format-check $d ==="; make -C "$d" format-check 2>&1 || true; done'
+        continue-on-error: true

@@ -1,0 +1,24 @@
+name: Nightly
+
+on:
+  schedule:
+    - cron: '0 4 * * 1'  # Weekly: Monday 4am UTC
+  workflow_dispatch:       # Manual trigger
+
+jobs:
+  full-test:
+    uses: ./.github/workflows/test.yml
+
+  report:
+    runs-on: ubuntu-latest
+    needs: [full-test]
+    if: always()
+    steps:
+      - name: Summary
+        run: |
+          echo "## Weekly Test Run Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered**: $(date -u)" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status**: ${{ needs.full-test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Languages**: 19" >> $GITHUB_STEP_SUMMARY
+          echo "- **Tutorials**: 171" >> $GITHUB_STEP_SUMMARY

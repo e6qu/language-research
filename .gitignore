@@ -67,3 +67,4 @@ result
 # Claude
 .claude/
 zig-out/
+.zig-cache/

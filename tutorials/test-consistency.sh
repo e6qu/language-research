@@ -56,7 +56,13 @@ run_tutorial() {
         [ -d "$d" ] || continue
         cleanup_ports
         printf "  %-20s %-40s " "$lang" "$tutorial"
-        if timeout 120 make -C "$d" e2e > /tmp/consistency-${lang}-${tutorial}.log 2>&1; then
+        local cmd
+        if [ "${CI_DOCKER:-}" = "1" ]; then
+            cmd="docker run --rm --network host -v $(pwd)/$lang/$tutorial:/tutorials -w /tutorials tutorial-$lang:ci make e2e"
+        else
+            cmd="make -C $d e2e"
+        fi
+        if timeout 120 $cmd > /tmp/consistency-${lang}-${tutorial}.log 2>&1; then
             echo "PASS"
             PASS=$((PASS + 1))
         else
