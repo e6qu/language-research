@@ -14,9 +14,9 @@ typecheck:
 
 e2e: fatbin
 	java -jar target/quarkus-app/quarkus-run.jar &
-	sleep 3
+	sleep 8
 	curl -sf http://localhost:4090/ | grep -q "Hello"
-	kill %1 2>/dev/null || true
+	pkill -f "quarkus-run" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

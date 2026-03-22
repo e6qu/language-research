@@ -12,8 +12,11 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: build
-	mvn -q exec:java -Dexec.mainClass="hello.Main" | grep -q "Hello"
+e2e: fatbin
+	java -jar target/*-jar-with-dependencies.jar &
+	sleep 3
+	curl -sf http://localhost:4073/healthz | grep -q "status"
+	pkill -f "jar-with-dependencies" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

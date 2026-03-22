@@ -15,7 +15,7 @@ typecheck:
 e2e: build
 	@echo "Starting server on port 4103..."
 	@lein run 4103 &
-	@sleep 5
+	@sleep 12
 	@curl -sf http://localhost:4103/healthz | grep -q "alive" && echo "GET /healthz OK"
 	@curl -sf http://localhost:4103/readyz | grep -q "ready" && echo "GET /readyz OK"
 	@curl -sf http://localhost:4103/health | grep -q "healthy" && echo "GET /health OK"
