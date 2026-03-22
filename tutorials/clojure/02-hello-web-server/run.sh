@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 set -euo pipefail
-lein run "${@:-4020}"
+lein run "${@:-4100}"

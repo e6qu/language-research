@@ -6,11 +6,11 @@ pub fn main() !void {
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    const address = std.net.Address.parseIp("127.0.0.1", 8080) catch unreachable;
+    const address = std.net.Address.parseIp("127.0.0.1", 4110) catch unreachable;
     var server = try address.listen(.{ .reuse_address = true });
     defer server.deinit();
 
-    std.log.info("Listening on http://127.0.0.1:8080", .{});
+    std.log.info("Listening on http://127.0.0.1:4110", .{});
 
     while (true) {
         var conn = try server.accept();

@@ -11,7 +11,7 @@ func main() {
 	dt.Register("cache", true, "connected")
 
 	mux := newHealthMux(dt)
-	addr := ":8080"
+	addr := ":4063"
 	fmt.Printf("Listening on %s\n", addr)
 	fmt.Println("  GET /healthz — liveness probe")
 	fmt.Println("  GET /readyz  — readiness probe")

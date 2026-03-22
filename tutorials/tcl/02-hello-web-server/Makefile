@@ -27,7 +27,7 @@ e2e: build
 fatbin:
 	cat src/*.tcl > hello_bundle.tcl
 	echo '# Entry point' >> hello_bundle.tcl
-	echo 'set port [expr {[llength $$argv] > 0 ? [lindex $$argv 0] : 8080}]' >> hello_bundle.tcl
+	echo 'set port [expr {[llength $$argv] > 0 ? [lindex $$argv 0] : 4020}]' >> hello_bundle.tcl
 	echo 'start_server $$port' >> hello_bundle.tcl
 	@echo "Fat bundle: hello_bundle.tcl (requires tclsh)"
 	@ls -la hello_bundle.tcl

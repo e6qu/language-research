@@ -5,5 +5,5 @@ echo "=== Running tests ==="
 make test
 
 echo ""
-echo "=== Starting metrics server on port 8080 ==="
+echo "=== Starting metrics server on port 4141 ==="
 guile src/hello.scm

@@ -15,7 +15,7 @@ typecheck:
 e2e: fatbin
 	java -jar target/*.jar &
 	sleep 5
-	curl -sf http://localhost:8080/ | grep -q "Hello"
+	curl -sf http://localhost:4082/ | grep -q "Hello"
 	kill %1 2>/dev/null || true
 	@echo "E2E: PASS"
 

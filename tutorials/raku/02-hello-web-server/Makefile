@@ -1,6 +1,6 @@
 .PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
-PORT ?= 8082
+PORT ?= 4040
 
 build:
 	raku -c lib/Server.rakumod

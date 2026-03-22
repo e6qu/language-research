@@ -81,7 +81,7 @@
   (route/not-found "not found"))
 
 (defn -main [& args]
-  (let [port (Integer/parseInt (or (first args) "4027"))]
+  (let [port (Integer/parseInt (or (first args) "4101"))]
     ;; Seed some demo metrics
     (inc-counter! "http_requests_total" {:method "GET" :path "/"})
     (observe-histogram! "http_request_duration_seconds" 0.042 {:path "/"})

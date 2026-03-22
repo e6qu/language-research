@@ -15,9 +15,9 @@ typecheck:
 e2e: build
 	./target/release/hello-web-server &
 	sleep 1
-	curl -s http://localhost:3000/ | grep -q "Hello, World!"
-	curl -s http://localhost:3000/greet/Test | grep -q "Hello, Test!"
-	curl -s -o /dev/null -w "%{http_code}" http://localhost:3000/nope | grep -q "404"
+	curl -s http://localhost:4050/ | grep -q "Hello, World!"
+	curl -s http://localhost:4050/greet/Test | grep -q "Hello, Test!"
+	curl -s -o /dev/null -w "%{http_code}" http://localhost:4050/nope | grep -q "404"
 	kill %1
 	@echo "e2e passed"
 

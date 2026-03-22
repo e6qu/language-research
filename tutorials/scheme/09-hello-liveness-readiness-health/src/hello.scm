@@ -88,7 +88,7 @@
   (mark-ready!)
   (let ((port (if (> (length (command-line)) 1)
                   (string->number (cadr (command-line)))
-                  8080)))
+                  4143)))
     (format #t "Health server on http://localhost:~a~%" port)
     (format #t "  /healthz  - liveness~%")
     (format #t "  /readyz   - readiness~%")

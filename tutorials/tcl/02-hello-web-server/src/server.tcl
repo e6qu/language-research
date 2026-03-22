@@ -36,7 +36,7 @@ namespace eval server {
 }
 
 if {[info script] eq $::argv0} {
-    set port 8080
+    set port 4020
     if {[llength $::argv] > 0} {
         set port [lindex $::argv 0]
     }

@@ -15,9 +15,9 @@ typecheck:
 e2e: build
 	./zig-out/bin/hello_web_server &
 	sleep 1
-	curl -s http://127.0.0.1:8080/ | python3 -m json.tool
-	curl -s http://127.0.0.1:8080/greet/Zig | python3 -m json.tool
-	curl -s http://127.0.0.1:8080/unknown | python3 -m json.tool
+	curl -s http://127.0.0.1:4110/ | python3 -m json.tool
+	curl -s http://127.0.0.1:4110/greet/Zig | python3 -m json.tool
+	curl -s http://127.0.0.1:4110/unknown | python3 -m json.tool
 	kill %1 || true
 
 fatbin:

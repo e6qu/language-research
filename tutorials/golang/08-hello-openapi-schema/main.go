@@ -7,7 +7,7 @@ import (
 
 func main() {
 	mux := newMux()
-	addr := ":8080"
+	addr := ":4062"
 	fmt.Printf("Listening on %s\n", addr)
 	fmt.Println("  GET  /            — greeting")
 	fmt.Println("  GET  /greet/{name} — greet by name")

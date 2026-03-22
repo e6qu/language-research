@@ -45,7 +45,7 @@
   (let ((line (read-line stream nil nil)))
     (or line "")))
 
-(defun start-server (&optional (port 8080))
+(defun start-server (&optional (port 4150))
   (let ((server-socket (make-instance 'sb-bsd-sockets:inet-socket
                                       :type :stream :protocol :tcp)))
     (setf (sb-bsd-sockets:sockopt-reuse-address server-socket) t)
@@ -77,5 +77,5 @@
 (defun main ()
   (let ((port (or (ignore-errors
                     (parse-integer (second sb-ext:*posix-argv*)))
-                  8080)))
+                  4150)))
     (start-server port)))

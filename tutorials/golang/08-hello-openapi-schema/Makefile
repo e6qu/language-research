@@ -14,13 +14,13 @@ typecheck:
 	go vet ./...
 
 e2e: build
-	@lsof -ti:8080 | xargs kill 2>/dev/null || true
+	@lsof -ti:4062 | xargs kill 2>/dev/null || true
 	@sleep 1
 	./hello &
 	@sleep 1
-	curl -s http://localhost:8080/api/openapi | grep -q "openapi" && echo "PASS: openapi"
-	curl -s http://localhost:8080/greet/Test | grep -q "Hello, Test!" && echo "PASS: greet"
-	curl -s -X POST -d '{"name":"Bob"}' http://localhost:8080/greet | grep -q "Hello, Bob!" && echo "PASS: post greet"
+	curl -s http://localhost:4062/api/openapi | grep -q "openapi" && echo "PASS: openapi"
+	curl -s http://localhost:4062/greet/Test | grep -q "Hello, Test!" && echo "PASS: greet"
+	curl -s -X POST -d '{"name":"Bob"}' http://localhost:4062/greet | grep -q "Hello, Bob!" && echo "PASS: post greet"
 	@kill %1 2>/dev/null || true
 
 fatbin:

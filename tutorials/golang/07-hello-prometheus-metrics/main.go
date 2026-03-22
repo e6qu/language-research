@@ -7,7 +7,7 @@ import (
 
 func main() {
 	mux := newMetricsMux()
-	addr := ":8080"
+	addr := ":4061"
 	fmt.Printf("Listening on %s\n", addr)
 	fmt.Println("  GET /        — index")
 	fmt.Println("  GET /work    — do work (increments counter)")

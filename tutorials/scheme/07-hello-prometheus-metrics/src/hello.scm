@@ -87,6 +87,6 @@
   (setup-default-metrics)
   (let ((port (if (> (length (command-line)) 1)
                   (string->number (cadr (command-line)))
-                  8080)))
+                  4141)))
     (format #t "Serving metrics on http://localhost:~a/metrics~%" port)
     (run-server handler 'http `(#:port ,port))))

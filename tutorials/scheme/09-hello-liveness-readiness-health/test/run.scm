@@ -26,7 +26,7 @@
 
 ;; Handler tests
 (define (make-test-request path)
-  (build-request (build-uri 'http #:host "localhost" #:port 8080 #:path path)))
+  (build-request (build-uri 'http #:host "localhost" #:port 4143 #:path path)))
 
 ;; Liveness check when alive
 (mark-alive!)

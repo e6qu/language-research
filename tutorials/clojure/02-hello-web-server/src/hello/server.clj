@@ -16,6 +16,6 @@
   (route/not-found (json-response 404 {:error "not found"})))
 
 (defn -main [& args]
-  (let [port (Integer/parseInt (or (first args) "4020"))]
+  (let [port (Integer/parseInt (or (first args) "4100"))]
     (println (str "Listening on port " port))
     (jetty/run-jetty app {:port port :join? true})))

@@ -28,7 +28,7 @@ sub handle_request {
 
 sub start {
     my ($port) = @_;
-    $port //= 8080;
+    $port //= 4030;
 
     my $server = IO::Socket::INET->new(
         LocalPort => $port,

@@ -13,12 +13,12 @@ typecheck:
 	mvn -q compile
 
 e2e: build
-	@lsof -ti:8080 | xargs kill 2>/dev/null || true
+	@lsof -ti:4071 | xargs kill 2>/dev/null || true
 	@sleep 1
-	java -cp target/*-jar-with-dependencies.jar hello.Main 8080 &
+	java -cp target/*-jar-with-dependencies.jar hello.Main 4071 &
 	@sleep 2
-	curl -s http://localhost:8080/ | grep -q "Hello"
-	curl -s http://localhost:8080/metrics | grep -q "http_requests_total"
+	curl -s http://localhost:4071/ | grep -q "Hello"
+	curl -s http://localhost:4071/metrics | grep -q "http_requests_total"
 	@kill %1 2>/dev/null || true
 	@echo "E2E: PASS"
 

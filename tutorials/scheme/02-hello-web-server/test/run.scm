@@ -6,7 +6,7 @@
 (load "../src/hello.scm")
 
 (define (make-test-request path)
-  (build-request (build-uri 'http #:host "localhost" #:port 8080 #:path path)))
+  (build-request (build-uri 'http #:host "localhost" #:port 4140 #:path path)))
 
 (test-begin "web-server")
 

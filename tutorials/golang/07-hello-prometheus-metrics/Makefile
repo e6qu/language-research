@@ -14,13 +14,13 @@ typecheck:
 	go vet ./...
 
 e2e: build
-	@lsof -ti:8080 | xargs kill 2>/dev/null || true
+	@lsof -ti:4061 | xargs kill 2>/dev/null || true
 	@sleep 1
 	./hello &
 	@sleep 1
-	curl -s http://localhost:8080/work > /dev/null
-	curl -s http://localhost:8080/work > /dev/null
-	curl -s http://localhost:8080/metrics | grep -q "work_total" && echo "PASS: metrics"
+	curl -s http://localhost:4061/work > /dev/null
+	curl -s http://localhost:4061/work > /dev/null
+	curl -s http://localhost:4061/metrics | grep -q "work_total" && echo "PASS: metrics"
 	@kill %1 2>/dev/null || true
 
 fatbin:

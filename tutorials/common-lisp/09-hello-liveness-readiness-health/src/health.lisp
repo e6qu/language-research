@@ -135,7 +135,7 @@
                       (render-json result))))
     (t (http-response 404 "Not Found" "text/plain" "Not Found"))))
 
-(defun start-server (checker &optional (port 8080))
+(defun start-server (checker &optional (port 4153))
   (let ((server-socket (make-instance 'sb-bsd-sockets:inet-socket
                                       :type :stream :protocol :tcp)))
     (setf (sb-bsd-sockets:sockopt-reuse-address server-socket) t)
@@ -175,4 +175,4 @@
     (set-ready checker t)
     (start-server checker
                   (or (ignore-errors (parse-integer (second sb-ext:*posix-argv*)))
-                      8080))))
+                      4153))))

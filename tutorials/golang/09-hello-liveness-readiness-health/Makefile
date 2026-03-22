@@ -16,9 +16,9 @@ typecheck:
 e2e: build
 	./hello &
 	@sleep 1
-	curl -s http://localhost:8080/healthz | grep -q "alive" && echo "PASS: healthz"
-	curl -s http://localhost:8080/readyz | grep -q "ready" && echo "PASS: readyz"
-	curl -s http://localhost:8080/health | grep -q "healthy" && echo "PASS: health"
+	curl -s http://localhost:4063/healthz | grep -q "alive" && echo "PASS: healthz"
+	curl -s http://localhost:4063/readyz | grep -q "ready" && echo "PASS: readyz"
+	curl -s http://localhost:4063/health | grep -q "healthy" && echo "PASS: health"
 	@kill %1 2>/dev/null || true
 
 fatbin:

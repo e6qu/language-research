@@ -13,13 +13,13 @@ typecheck:
 	@echo "No static type checker (use clj-kondo for linting)"
 
 e2e: build
-	@echo "Starting server on port 4020..."
-	@lein run 4020 &
+	@echo "Starting server on port 4100..."
+	@lein run 4100 &
 	@sleep 10
-	@curl -sf http://localhost:4020/ | grep -q "Hello, world!" && echo "GET / OK"
-	@curl -sf http://localhost:4020/greet/E2E | grep -q "Hello, E2E!" && echo "GET /greet/E2E OK"
-	@curl -sf -o /dev/null -w '%{http_code}' http://localhost:4020/nope | grep -q 404 && echo "404 OK"
-	@pkill -f "hello-web.*4020" 2>/dev/null || true
+	@curl -sf http://localhost:4100/ | grep -q "Hello, world!" && echo "GET / OK"
+	@curl -sf http://localhost:4100/greet/E2E | grep -q "Hello, E2E!" && echo "GET /greet/E2E OK"
+	@curl -sf -o /dev/null -w '%{http_code}' http://localhost:4100/nope | grep -q 404 && echo "404 OK"
+	@pkill -f "hello-web.*4100" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

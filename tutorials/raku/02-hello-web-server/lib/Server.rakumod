@@ -20,7 +20,7 @@ sub handle-request(Str $request --> List) is export {
     }
 }
 
-sub start-server(Int $port = 8080) is export {
+sub start-server(Int $port = 4040) is export {
     my $listener = IO::Socket::INET.new(
         :listen,
         :localport($port),

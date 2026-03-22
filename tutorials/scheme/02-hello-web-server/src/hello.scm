@@ -28,6 +28,6 @@
            (string-suffix? "hello.scm" (car (command-line))))
   (let ((port (if (> (length (command-line)) 1)
                   (string->number (cadr (command-line)))
-                  8080)))
+                  4140)))
     (format #t "Listening on port ~a~%" port)
     (start-server port)))
