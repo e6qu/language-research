@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     ca-certificates \
     make \
+    lsof \
     && rm -rf /var/lib/apt/lists/*
 
 RUN raku --version | head -2

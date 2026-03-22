@@ -39,6 +39,10 @@
             (name (subseq request-line name-start (or name-end (length request-line)))))
        (http-response 200 "OK" "application/json"
                        (format nil "{\"message\":\"Hello, ~A!\"}" name))))
+    ((search "GET /greet" request-line)
+     (let ((name (parse-name-from-request request-line)))
+       (http-response 200 "OK" "application/json"
+                       (format nil "{\"message\":\"~A\"}" (greet name)))))
     ((and (search "GET / " request-line) (not (search "GET /g" request-line)))
      (http-response 200 "OK" "application/json"
                      "{\"message\":\"Hello, world!\"}"))
