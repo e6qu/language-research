@@ -1,7 +1,7 @@
 .PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	mvn -q package -DskipTests
+	mvn -q compile
 
 clean:
 	mvn -q clean
@@ -17,7 +17,7 @@ e2e: build
 	@echo "E2E: PASS"
 
 fatbin:
-	mvn -q package -DskipTests
+	mvn -q compile
 	@echo "Fat JAR:"
 	@ls -la target/*-jar-with-dependencies.jar 2>/dev/null || ls -la target/*.jar
 

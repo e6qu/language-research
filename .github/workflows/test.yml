@@ -57,31 +57,27 @@ jobs:
           cache-to: type=gha,scope=${{ matrix.lang }},mode=max
         continue-on-error: ${{ contains(fromJSON('["c3","zig"]'), matrix.lang) }}
 
-      - name: Build tutorials
-        run: |
-          docker run --rm \
-            -v "${{ github.workspace }}/tutorials/${{ matrix.lang }}":/tutorials \
-            -w /tutorials \
-            tutorial-${{ matrix.lang }}:ci \
-            bash -c 'for d in [0-9]*/; do echo "=== build $d ==="; make -C "$d" build 2>&1 || true; done'
-        continue-on-error: ${{ contains(fromJSON('["c3","zig"]'), matrix.lang) }}
-
-      - name: Run unit tests
-        run: |
-          docker run --rm \
-            -v "${{ github.workspace }}/tutorials/${{ matrix.lang }}":/tutorials \
-            -w /tutorials \
-            tutorial-${{ matrix.lang }}:ci \
-            bash -c 'failures=0; for d in [0-9]*/; do echo "=== test $d ==="; make -C "$d" test || failures=$((failures+1)); done; exit $failures'
-        continue-on-error: ${{ contains(fromJSON('["c3","zig"]'), matrix.lang) }}
-
-      - name: Run e2e tests
+      - name: Build + Test + E2E
         run: |
           docker run --rm --network host \
             -v "${{ github.workspace }}/tutorials/${{ matrix.lang }}":/tutorials \
             -w /tutorials \
             tutorial-${{ matrix.lang }}:ci \
-            bash -c 'failures=0; for d in [0-9]*/; do echo "=== e2e $d ==="; make -C "$d" e2e || failures=$((failures+1)); done; exit $failures'
+            bash -c '
+              echo "=== BUILD ==="
+              for d in [0-9]*/; do echo "--- build $d ---"; make -C "$d" build 2>&1 || true; done
+              echo ""
+              echo "=== TEST ==="
+              failures=0
+              for d in [0-9]*/; do echo "--- test $d ---"; make -C "$d" test || failures=$((failures+1)); done
+              if [ $failures -gt 0 ]; then echo "FAILED: $failures test(s)"; exit 1; fi
+              echo ""
+              echo "=== E2E ==="
+              failures=0
+              for d in [0-9]*/; do echo "--- e2e $d ---"; make -C "$d" e2e || failures=$((failures+1)); done
+              if [ $failures -gt 0 ]; then echo "FAILED: $failures e2e(s)"; exit 1; fi
+              echo "ALL PASSED"
+            '
         continue-on-error: ${{ contains(fromJSON('["c3","zig"]'), matrix.lang) }}
 
       - name: Collect binary sizes
