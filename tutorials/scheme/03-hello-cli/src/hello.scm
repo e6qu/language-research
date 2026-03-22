@@ -10,15 +10,20 @@
      ((and (string=? (car remaining) "--greeting")
            (pair? (cdr remaining)))
       (loop (cddr remaining) (cons (cons 'greeting (cadr remaining)) result)))
+     ((string=? (car remaining) "--shout")
+      (loop (cdr remaining) (cons (cons 'shout #t) result)))
      ((string=? (car remaining) "--help")
       (cons (cons 'help #t) result))
      (else
       (loop (cdr remaining) result)))))
 
 (define (format-greeting opts)
-  (let ((greeting (or (assoc-ref opts 'greeting) "Hello"))
-        (name (or (assoc-ref opts 'name) "world")))
-    (string-append greeting ", " name "!")))
+  (let* ((greeting (or (assoc-ref opts 'greeting) "Hello"))
+         (name (or (assoc-ref opts 'name) "world"))
+         (message (string-append greeting ", " name "!")))
+    (if (assoc-ref opts 'shout)
+        (string-upcase message)
+        message)))
 
 (define (usage)
   (string-join

@@ -15,7 +15,7 @@ typecheck:
 e2e: build
 	@lsof -ti:4120 | xargs kill 2>/dev/null || true
 	./hello &
-	@sleep 2
+	@sleep 5
 	curl -sf http://localhost:4120/ | grep -q "Hello, world!"
 	curl -sf http://localhost:4120/greet/Test | grep -q "Hello, Test!"
 	@pkill -f "./hello" 2>/dev/null || true

@@ -15,8 +15,8 @@ typecheck:
 e2e: build
 	@lsof -ti:4083 | xargs kill 2>/dev/null || true
 	java -jar target/*.jar &
-	@sleep 5
-	curl -sf http://localhost:4083/healthz | grep -q "status"
+	@sleep 10
+	curl -sf http://localhost:4083/actuator/health | grep -q "status"
 	@pkill -f "target/.*jar" 2>/dev/null || true
 	@echo "E2E: PASS"
 

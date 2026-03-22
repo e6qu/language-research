@@ -27,7 +27,7 @@ pub async fn work_handler() -> impl IntoResponse {
 pub fn app() -> Router {
     Router::new()
         .route("/metrics", axum::routing::get(metrics_handler))
-        .route("/work", axum::routing::post(work_handler))
+        .route("/work", axum::routing::get(work_handler).post(work_handler))
 }
 
 #[cfg(test)]

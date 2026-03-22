@@ -16,7 +16,7 @@ e2e: build
 	@lsof -ti:4082 | xargs kill 2>/dev/null || true
 	java -jar target/*.jar &
 	@sleep 5
-	curl -sf http://localhost:4082/api/openapi | grep -q "openapi"
+	curl -sf http://localhost:4082/v3/api-docs | grep -q "openapi"
 	@pkill -f "target/.*jar" 2>/dev/null || true
 	@echo "E2E: PASS"
 

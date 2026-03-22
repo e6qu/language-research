@@ -17,7 +17,7 @@ e2e: build
 	java -jar target/*.jar &
 	@sleep 5
 	curl -sf http://localhost:4081/work > /dev/null
-	curl -sf http://localhost:4081/metrics | grep -q "work"
+	curl -sf http://localhost:4081/actuator/prometheus | grep -q "work"
 	@pkill -f "target/.*jar" 2>/dev/null || true
 	@echo "E2E: PASS"
 

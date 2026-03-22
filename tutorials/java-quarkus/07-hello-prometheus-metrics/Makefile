@@ -1,7 +1,7 @@
 .PHONY: build clean test typecheck e2e fatbin native lint autoformat format-check
 
 build:
-	mvn -q package -DskipTests -Dquarkus.package.jar.type=uber-jar
+	mvn -q package -DskipTests
 
 clean:
 	mvn -q clean
@@ -13,11 +13,12 @@ typecheck:
 	mvn -q compile
 
 e2e: build
-	@lsof -ti:4091 | xargs kill 2>/dev/null || true
+	@lsof -ti:4091 | xargs kill -9 2>/dev/null || true
+	@sleep 1
 	java -jar target/quarkus-app/quarkus-run.jar &
 	@sleep 12
 	curl -sf http://localhost:4091/work > /dev/null
-	curl -sf http://localhost:4091/metrics | grep -q "work"
+	curl -sf http://localhost:4091/q/metrics | grep -q "work"
 	@pkill -f "quarkus-run" 2>/dev/null || true
 	@echo "E2E: PASS"
 

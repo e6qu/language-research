@@ -1,6 +1,6 @@
 module hello;
 
-import std.string : indexOf, strip;
+import std.string : indexOf, strip, startsWith;
 import std.conv : to;
 import std.array : split;
 
@@ -38,6 +38,10 @@ HttpRequest parseRequest(string raw) {
 HttpResponse handleRequest(HttpRequest req) {
     if (req.path == "/") {
         return HttpResponse(200, "OK", "text/plain", "Hello, world!");
+    }
+    if (req.path.startsWith("/greet/")) {
+        auto name = req.path["/greet/".length .. $];
+        return HttpResponse(200, "OK", "text/plain", "Hello, " ~ name ~ "!");
     }
     if (req.path == "/health") {
         return HttpResponse(200, "OK", "application/json", `{"status":"ok"}`);

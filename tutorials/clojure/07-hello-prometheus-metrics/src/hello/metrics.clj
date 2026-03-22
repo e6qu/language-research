@@ -70,6 +70,9 @@
 ;; --- HTTP handler ---
 
 (defroutes app
+  (GET "/work" []
+    (inc-counter! "work_total")
+    {:status 200 :headers {"Content-Type" "text/plain"} :body "work done"})
   (GET "/metrics" []
     (inc-counter! "metrics_scrapes_total")
     {:status 200
