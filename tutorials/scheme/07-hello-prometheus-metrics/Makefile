@@ -13,9 +13,9 @@ typecheck:
 	guile -c '(load "src/hello.scm")' && echo "Syntax OK"
 
 e2e: build
-	guile src/hello.scm 8083 &
+	guile src/hello.scm 4141 &
 	sleep 1
-	curl -sf http://localhost:8083/metrics | grep -q "http_requests_total"
+	curl -sf http://localhost:4141/metrics | grep -q "http_requests_total"
 	kill %1 2>/dev/null || true
 	@echo "E2E passed"
 

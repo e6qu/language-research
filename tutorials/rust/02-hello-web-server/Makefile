@@ -18,7 +18,7 @@ e2e: build
 	curl -s http://localhost:4050/ | grep -q "Hello, World!"
 	curl -s http://localhost:4050/greet/Test | grep -q "Hello, Test!"
 	curl -s -o /dev/null -w "%{http_code}" http://localhost:4050/nope | grep -q "404"
-	kill %1
+	pkill -f "target/release/hello" 2>/dev/null || true
 	@echo "e2e passed"
 
 fatbin:

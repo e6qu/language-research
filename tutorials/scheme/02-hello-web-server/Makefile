@@ -13,10 +13,10 @@ typecheck:
 	guile -c '(load "src/hello.scm")' && echo "Syntax OK"
 
 e2e: build
-	guile src/hello.scm 8082 &
+	guile src/hello.scm 4140 &
 	sleep 1
-	curl -sf http://localhost:8082/ | grep -q "Hello, world!"
-	curl -sf http://localhost:8082/health | grep -q "OK"
+	curl -sf http://localhost:4140/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4140/health | grep -q "OK"
 	kill %1 2>/dev/null || true
 	@echo "E2E passed"
 

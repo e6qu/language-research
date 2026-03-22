@@ -17,7 +17,7 @@ e2e: build
 	sleep 1
 	curl -s -X POST http://localhost:4051/work
 	curl -s http://localhost:4051/metrics | grep -q "work_total"
-	kill %1
+	pkill -f "target/release/hello" 2>/dev/null || true
 	@echo "e2e passed"
 
 fatbin:

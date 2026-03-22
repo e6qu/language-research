@@ -16,7 +16,7 @@ e2e: build
 	./target/release/hello-openapi-schema &
 	sleep 1
 	curl -s http://localhost:4052/api/openapi | python3 -c "import sys,json; d=json.load(sys.stdin); assert 'openapi' in d"
-	kill %1
+	pkill -f "target/release/hello" 2>/dev/null || true
 	@echo "e2e passed"
 
 fatbin:
