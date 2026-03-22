@@ -5,7 +5,7 @@
 # Run:    docker run -it --rm -v $(pwd):/tutorials -w /tutorials tutorial-elixir bash
 # Test:   docker run --rm -v $(pwd):/tutorials -w /tutorials/01-hello-world tutorial-elixir mix test
 
-FROM hexpm/elixir:1.17.3-erlang-27.2-debian-bookworm-20241016 AS base
+FROM elixir:1.17-slim AS base
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \

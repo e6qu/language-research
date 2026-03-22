@@ -57,6 +57,15 @@ jobs:
           cache-to: type=gha,scope=${{ matrix.lang }},mode=max
         continue-on-error: ${{ matrix.lang == 'c3' }}
 
+      - name: Build tutorials
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/tutorials/${{ matrix.lang }}":/tutorials \
+            -w /tutorials \
+            tutorial-${{ matrix.lang }}:ci \
+            bash -c 'for d in [0-9]*/; do echo "=== build $d ==="; make -C "$d" build 2>&1 || true; done'
+        continue-on-error: ${{ matrix.lang == 'c3' }}
+
       - name: Run unit tests
         run: |
           docker run --rm \
