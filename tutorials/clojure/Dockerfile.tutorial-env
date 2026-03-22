@@ -1,0 +1,16 @@
+# Clojure tutorial environment
+#
+# Build:  docker build -f Dockerfile.tutorial-env -t tutorial-clojure .
+# Run:    docker run -it --rm -v $(pwd):/tutorials -w /tutorials tutorial-clojure bash
+# Test:   docker run --rm -v $(pwd):/tutorials -w /tutorials/01-hello-world tutorial-clojure make test
+
+FROM clojure:temurin-21-lein-bookworm-slim AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl jq python3 ca-certificates make \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN clj --version && lein version && java --version | head -1
+
+WORKDIR /tutorials
+CMD ["bash"]

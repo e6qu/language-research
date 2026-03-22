@@ -1,8 +1,8 @@
 # language-research
 
-A multi-language comparison project exploring the suitability of 13 languages and frameworks for building AI agents, CLIs, web servers, TUIs, and web GUIs.
+A multi-language comparison project exploring the suitability of 14 languages and frameworks for building AI agents, CLIs, web servers, TUIs, and web GUIs.
 
-**117 tutorials** (13 tracks × 9 topics), each with source code, unit tests, E2E tests, and a uniform Makefile. **14 summary documents** comparing type systems, error handling, concurrency models, protocol support, binary distribution, and notable production software.
+**126 tutorials** (14 tracks × 9 topics), each with source code, unit tests, E2E tests, and a uniform Makefile. **15 summary documents** comparing type systems, error handling, concurrency models, protocol support, binary distribution, and notable production software.
 
 ## Languages
 
@@ -21,6 +21,7 @@ A multi-language comparison project exploring the suitability of 13 languages an
 | **Java** | Static (nominal) | Virtual threads (21+) | Fat JAR / jlink / native-image | JUnit 5 |
 | **Spring Boot** | Static | @Async / WebFlux | Fat JAR / Spring Native | Spring Boot Test |
 | **Quarkus** | Static | Mutiny reactive / virtual threads | Native binary (GraalVM AoT) | @QuarkusTest |
+| **Clojure** | Dynamic (spec, Malli) | Atoms / refs (STM) / core.async | lein uberjar / GraalVM | clojure.test |
 
 ## Tutorials
 
@@ -104,6 +105,7 @@ In-depth comparison docs at the project root:
 | [JAVA.md](JAVA.md) | Virtual threads, records, sealed classes, JVM internals |
 | [JAVA_SPRINGBOOT.md](JAVA_SPRINGBOOT.md) | Auto-config, actuator, micrometer, Spring Native |
 | [JAVA_QUARKUS.md](JAVA_QUARKUS.md) | Build-time DI, GraalVM native, MicroProfile, Dev Services |
+| [CLOJURE.md](CLOJURE.md) | Persistent data, STM, core.async, spec, REPL-driven dev |
 
 ## Development Environments
 
@@ -156,7 +158,8 @@ language-research/
     ├── golang/
     ├── java/
     ├── java-springboot/
-    └── java-quarkus/
+    ├── java-quarkus/
+    └── clojure/
 ```
 
 ## Binary Size Comparison

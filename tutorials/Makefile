@@ -10,11 +10,11 @@
 #   make docker-build  — build Docker tutorial environments
 #
 # Per-language: make {test,build,e2e,typecheck}-{lang}
-#   Languages: elixir erlang elm lua tcl perl raku rust rust-wasm golang java java-springboot java-quarkus
+#   Languages: elixir erlang elm lua tcl perl raku rust rust-wasm golang java java-springboot java-quarkus clojure
 
 SHELL := /bin/bash
 
-LANGUAGES := elixir erlang elm lua tcl perl raku rust rust-wasm golang java java-springboot java-quarkus
+LANGUAGES := elixir erlang elm lua tcl perl raku rust rust-wasm golang java java-springboot java-quarkus clojure
 
 ELIXIR_TUTORIALS     := $(sort $(wildcard elixir/[0-9]*/))
 ERLANG_TUTORIALS     := $(sort $(wildcard erlang/[0-9]*/))
@@ -29,11 +29,13 @@ GOLANG_TUTORIALS     := $(sort $(wildcard golang/[0-9]*/))
 JAVA_TUTORIALS       := $(sort $(wildcard java/[0-9]*/))
 SPRINGBOOT_TUTORIALS := $(sort $(wildcard java-springboot/[0-9]*/))
 QUARKUS_TUTORIALS    := $(sort $(wildcard java-quarkus/[0-9]*/))
+CLOJURE_TUTORIALS    := $(sort $(wildcard clojure/[0-9]*/))
 
 ALL_TUTORIALS := $(ELIXIR_TUTORIALS) $(ERLANG_TUTORIALS) $(ELM_TUTORIALS) \
                  $(LUA_TUTORIALS) $(TCL_TUTORIALS) $(PERL_TUTORIALS) $(RAKU_TUTORIALS) \
                  $(RUST_TUTORIALS) $(RUST_WASM_TUTORIALS) $(GOLANG_TUTORIALS) \
-                 $(JAVA_TUTORIALS) $(SPRINGBOOT_TUTORIALS) $(QUARKUS_TUTORIALS)
+                 $(JAVA_TUTORIALS) $(SPRINGBOOT_TUTORIALS) $(QUARKUS_TUTORIALS) \
+                 $(CLOJURE_TUTORIALS)
 
 TOTAL := $(words $(ALL_TUTORIALS))
 
@@ -139,6 +141,10 @@ test-java-quarkus:
 	@echo "=== Testing Quarkus tutorials ==="
 	$(call run_target,$(QUARKUS_TUTORIALS),test,Quarkus)
 
+test-clojure:
+	@echo "=== Testing Clojure tutorials ==="
+	$(call run_target,$(CLOJURE_TUTORIALS),test,Clojure)
+
 build-elixir:
 	@echo "=== Building Elixir tutorials ==="
 	$(call run_target,$(ELIXIR_TUTORIALS),build,Elixir)
@@ -190,6 +196,10 @@ build-java-springboot:
 build-java-quarkus:
 	@echo "=== Building Quarkus tutorials ==="
 	$(call run_target,$(QUARKUS_TUTORIALS),build,Quarkus)
+
+build-clojure:
+	@echo "=== Building Clojure tutorials ==="
+	$(call run_target,$(CLOJURE_TUTORIALS),build,Clojure)
 
 e2e-elixir:
 	@echo "=== E2E Elixir tutorials ==="
@@ -243,6 +253,10 @@ e2e-java-quarkus:
 	@echo "=== E2E Quarkus tutorials ==="
 	$(call run_target,$(QUARKUS_TUTORIALS),e2e,Quarkus)
 
+e2e-clojure:
+	@echo "=== E2E Clojure tutorials ==="
+	$(call run_target,$(CLOJURE_TUTORIALS),e2e,Clojure)
+
 typecheck-elixir:
 	@echo "=== Type-checking Elixir tutorials ==="
 	$(call run_target,$(ELIXIR_TUTORIALS),typecheck,Elixir)
@@ -294,6 +308,10 @@ typecheck-java-springboot:
 typecheck-java-quarkus:
 	@echo "=== Type-checking Quarkus tutorials ==="
 	$(call run_target,$(QUARKUS_TUTORIALS),typecheck,Quarkus)
+
+typecheck-clojure:
+	@echo "=== Type-checking Clojure tutorials ==="
+	$(call run_target,$(CLOJURE_TUTORIALS),typecheck,Clojure)
 
 # ─── Binary artifact targets ──────────────────────────────────
 
@@ -411,3 +429,7 @@ docker-java-springboot:
 docker-java-quarkus:
 	@echo "=== Building Quarkus Docker image ==="
 	docker build -f java-quarkus/Dockerfile.tutorial-env -t tutorial-quarkus java-quarkus/
+
+docker-clojure:
+	@echo "=== Building Clojure Docker image ==="
+	docker build -f clojure/Dockerfile.tutorial-env -t tutorial-clojure clojure/
