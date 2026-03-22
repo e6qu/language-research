@@ -1,0 +1,23 @@
+# Tcl tutorial environment
+# Buildable on linux/arm64 and linux/amd64
+#
+# Build:  docker build -f Dockerfile.tutorial-env -t tutorial-tcl .
+# Run:    docker run -it --rm -v $(pwd):/tutorials -w /tutorials tutorial-tcl bash
+# Test:   docker run --rm -v $(pwd):/tutorials -w /tutorials/01-hello-world tutorial-tcl make test
+
+FROM debian:bookworm-slim AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tcl \
+    tcllib \
+    curl \
+    jq \
+    python3 \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN echo 'puts [info patchlevel]' | tclsh
+
+WORKDIR /tutorials
+
+CMD ["bash"]

@@ -1,0 +1,29 @@
+# Lua tutorial environment
+# Buildable on linux/arm64 and linux/amd64
+#
+# Build:  docker build -f Dockerfile.tutorial-env -t tutorial-lua .
+# Run:    docker run -it --rm -v $(pwd):/tutorials -w /tutorials tutorial-lua bash
+# Test:   docker run --rm -v $(pwd):/tutorials -w /tutorials/01-hello-world tutorial-lua make test
+
+FROM debian:bookworm-slim AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    lua5.4 \
+    liblua5.4-dev \
+    luarocks \
+    curl \
+    jq \
+    python3 \
+    ca-certificates \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN luarocks install busted \
+    && luarocks install dkjson \
+    && luarocks install luasocket
+
+RUN lua -v && luarocks --version | head -1
+
+WORKDIR /tutorials
+
+CMD ["bash"]

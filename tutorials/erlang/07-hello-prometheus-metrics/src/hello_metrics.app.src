@@ -1,0 +1,9 @@
+{application, hello_metrics, [
+    {description, "Hello Prometheus Metrics tutorial"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {hello_metrics_app, []}},
+    {applications, [kernel, stdlib, cowboy, prometheus]},
+    {env, []},
+    {modules, []}
+]}.

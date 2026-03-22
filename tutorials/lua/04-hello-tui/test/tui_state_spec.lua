@@ -1,0 +1,58 @@
+local tui_state = require("src.tui_state")
+
+describe("tui_state", function()
+    describe("new", function()
+        it("has 5 items", function()
+            local state = tui_state.new()
+            assert.are.equal(5, #state.items)
+        end)
+
+        it("starts with cursor at 1", function()
+            local state = tui_state.new()
+            assert.are.equal(1, state.cursor)
+        end)
+    end)
+
+    describe("move_down", function()
+        it("increments cursor", function()
+            local state = tui_state.new()
+            tui_state.move_down(state)
+            assert.are.equal(2, state.cursor)
+        end)
+
+        it("stays at end when already at last item", function()
+            local state = tui_state.new()
+            state.cursor = #state.items
+            tui_state.move_down(state)
+            assert.are.equal(#state.items, state.cursor)
+        end)
+    end)
+
+    describe("move_up", function()
+        it("stays at 1 when already at first item", function()
+            local state = tui_state.new()
+            tui_state.move_up(state)
+            assert.are.equal(1, state.cursor)
+        end)
+
+        it("decrements cursor", function()
+            local state = tui_state.new()
+            state.cursor = 3
+            tui_state.move_up(state)
+            assert.are.equal(2, state.cursor)
+        end)
+    end)
+
+    describe("selected_item", function()
+        it("returns the item at the cursor position", function()
+            local state = tui_state.new()
+            assert.are.equal("Lua", tui_state.selected_item(state))
+        end)
+
+        it("returns correct item after moving", function()
+            local state = tui_state.new()
+            tui_state.move_down(state)
+            assert.are.equal("Elixir", tui_state.selected_item(state))
+        end)
+    end)
+end)

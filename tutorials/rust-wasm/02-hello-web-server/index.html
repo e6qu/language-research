@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>02 - Hello Web Server</title></head>
+<body>
+  <h1>Rust-WASM Fetch Client</h1>
+  <div id="output">Loading...</div>
+  <script type="module">
+    import init, { fetch_and_render } from './pkg/hello_web_server.js';
+    async function run() {
+      await init();
+      try {
+        await fetch_and_render('https://jsonplaceholder.typicode.com/todos/1');
+      } catch (e) {
+        document.getElementById('output').textContent = 'Error: ' + e;
+      }
+    }
+    run();
+  </script>
+</body>
+</html>

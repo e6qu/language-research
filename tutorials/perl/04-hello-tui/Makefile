@@ -1,0 +1,21 @@
+.PHONY: build clean test typecheck e2e fatbin
+
+build:
+	perl -c lib/TuiState.pm
+
+clean:
+	rm -f *.out
+
+test:
+	prove -v t/
+
+typecheck:
+	perl -c lib/TuiState.pm
+
+e2e: build
+	perl -c bin/tui.pl
+	@echo "e2e passed (build verify only, TUI requires terminal)"
+
+fatbin:
+	@echo "Install PAR::Packer for fat binaries: cpan PAR::Packer"
+	@echo "Then: pp -o tui bin/tui.pl"

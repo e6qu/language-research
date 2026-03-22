@@ -1,0 +1,19 @@
+use Test;
+use lib 'lib';
+use OpenApiSpec;
+
+plan 7;
+
+# Spec structure
+{
+    my %s = spec();
+    is %s<openapi>, "3.0.3", "openapi version";
+    is %s<info><title>, "Hello API", "api title";
+    ok %s<paths>{"/"}, "has root path";
+    ok %s<paths>{'/greet/{name}'}, "has greet path";
+}
+
+# Validate name
+ok  validate-name("Alice"), "valid name";
+nok validate-name(""),      "empty name invalid";
+nok validate-name("a b"),   "name with space invalid";

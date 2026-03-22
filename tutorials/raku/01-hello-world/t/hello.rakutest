@@ -1,0 +1,9 @@
+use Test;
+use lib 'lib';
+use Hello;
+
+plan 3;
+
+is greet(),        "Hello, world!", "default greeting";
+is greet("Alice"), "Hello, Alice!", "named greeting";
+is greet(""),      "Hello, world!", "empty string greeting";

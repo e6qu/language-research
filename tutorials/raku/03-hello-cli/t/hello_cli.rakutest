@@ -1,0 +1,21 @@
+use Test;
+use lib 'lib';
+use HelloCli;
+
+plan 5;
+
+# parse-args tests
+{
+    my %opts = parse-args([]);
+    is %opts<name>, "world", "default name";
+    is %opts<shout>, False, "default shout off";
+}
+
+{
+    my %opts = parse-args(['--name', 'Alice', '--shout']);
+    is %opts<name>, "Alice", "parsed name";
+    is %opts<shout>, True, "parsed shout";
+}
+
+# format-greeting tests
+is format-greeting("Bob", True), "HELLO, BOB!", "shout greeting";

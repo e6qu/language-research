@@ -1,0 +1,8 @@
+{application, hello_tui, [
+    {description, "A minimal TUI demo in Erlang"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {applications, [kernel, stdlib]},
+    {env, []},
+    {modules, [hello_tui, hello_tui_state, hello_tui_render]}
+]}.

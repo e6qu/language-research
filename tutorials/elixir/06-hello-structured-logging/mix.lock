@@ -1,0 +1,4 @@
+%{
+  "jason": {:hex, :jason, "1.4.4", "b9226785a9aa77b6857ca22832cffa5d5011a667207eb2a0ad56adb5db443b8a", [:mix], [{:decimal, "~> 1.0 or ~> 2.0", [hex: :decimal, repo: "hexpm", optional: true]}], "hexpm", "c5eb0cab91f094599f94d55bc63409236a8ec69a21a67814529e8d5f6cc90b3b"},
+  "logger_json": {:hex, :logger_json, "7.0.4", "e315f2b9a755504658a745f3eab90d88d2cd7ac2ecfd08c8da94d8893965ab5c", [:mix], [{:decimal, ">= 0.0.0", [hex: :decimal, repo: "hexpm", optional: true]}, {:ecto, "~> 3.11", [hex: :ecto, repo: "hexpm", optional: true]}, {:jason, "~> 1.4", [hex: :jason, repo: "hexpm", optional: true]}, {:plug, "~> 1.15", [hex: :plug, repo: "hexpm", optional: true]}, {:telemetry, "~> 1.0", [hex: :telemetry, repo: "hexpm", optional: true]}], "hexpm", "d1369f8094e372db45d50672c3b91e8888bcd695fdc444a37a0734e96717c45c"},
+}

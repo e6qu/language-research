@@ -1,0 +1,68 @@
+# Build artifacts
+_build/
+_artifacts/
+target/
+deps/
+node_modules/
+elm-stuff/
+.precomp/
+pkg/
+
+# Language-specific
+*.beam
+*.o
+*.so
+*.dylib
+*.exe
+*.class
+erl_crash.dump
+*.luastatic.c
+
+# Elixir/Erlang
+.mix/
+.hex/
+.fetch
+*.ez
+
+# Elm
+main.js
+elm.js
+
+# Lua
+*.out
+main
+
+# Tcl
+hello_bundle.tcl
+
+# Java/Maven
+*.jar
+*.war
+target/
+
+# Go
+/golang/*/hello
+/golang/*/hello-*
+
+# Rust
+/rust/*/target/
+/rust-wasm/*/target/
+/rust-wasm/*/pkg/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Nix
+result
+.direnv/
+
+# Lockfiles are tracked (mix.lock, rebar.lock, go.sum, Cargo.lock)
+# elm.json pins exact versions (acts as lockfile)
+
+# Claude
+.claude/

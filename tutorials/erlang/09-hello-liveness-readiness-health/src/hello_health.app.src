@@ -1,0 +1,9 @@
+{application, hello_health, [
+    {description, "Hello Liveness Readiness Health Tutorial"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {hello_health_app, []}},
+    {applications, [kernel, stdlib, cowboy]},
+    {env, []},
+    {modules, []}
+]}.

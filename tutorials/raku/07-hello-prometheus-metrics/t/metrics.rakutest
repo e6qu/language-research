@@ -1,0 +1,36 @@
+use Test;
+use lib 'lib';
+use Metrics;
+
+plan 6;
+
+metrics-reset();
+
+# Counter
+counter-inc("http_requests_total", 1e0, :method("GET"));
+counter-inc("http_requests_total", 1e0, :method("GET"));
+{
+    my $out = metrics-format();
+    ok $out.contains("http_requests_total"), "has counter name";
+    ok $out.contains("2"), "counter incremented to 2";
+}
+
+metrics-reset();
+
+# Histogram
+histogram-observe("request_duration_seconds", 0.1e0, :path("/"));
+histogram-observe("request_duration_seconds", 0.3e0, :path("/"));
+{
+    my $out = metrics-format();
+    ok $out.contains("request_duration_seconds_sum"), "has histogram sum";
+    ok $out.contains("request_duration_seconds_count"), "has histogram count";
+    ok $out.contains("2"), "histogram count is 2";
+}
+
+metrics-reset();
+
+# Empty
+{
+    my $out = metrics-format();
+    is $out, "", "reset clears all metrics";
+}

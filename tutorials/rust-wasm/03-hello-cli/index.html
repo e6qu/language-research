@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"><title>03 - Hello CLI</title>
+  <style>
+    body { background: #1e1e1e; color: #0f0; font-family: monospace; padding: 20px; }
+    #output { white-space: pre; margin-bottom: 10px; }
+    input { background: #000; color: #0f0; border: 1px solid #0f0; padding: 5px; width: 60%; font-family: monospace; }
+  </style>
+</head>
+<body>
+  <h1>Command Palette</h1>
+  <div id="output"></div>
+  <input id="cmd-input" type="text" placeholder="Type a command..." autofocus>
+  <script type="module">
+    import init from './pkg/hello_cli.js';
+    await init();
+  </script>
+</body>
+</html>

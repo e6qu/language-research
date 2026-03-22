@@ -1,0 +1,39 @@
+use Test;
+use lib 'lib';
+use HealthChecker;
+
+plan 8;
+
+# Fresh checker
+{
+    my $hc = HealthChecker.new;
+    ok $hc.is-live, "always live";
+    ok $hc.is-ready, "ready with no deps";
+    is $hc.health-status<status>, "ok", "status ok";
+}
+
+# All deps healthy
+{
+    my $hc = HealthChecker.new;
+    $hc.register-dep("db", True);
+    $hc.register-dep("cache", True);
+    ok $hc.is-ready, "ready when all deps healthy";
+    is $hc.health-status<status>, "ok", "status ok with deps";
+}
+
+# One dep down
+{
+    my $hc = HealthChecker.new;
+    $hc.register-dep("db", True);
+    $hc.register-dep("cache", False);
+    nok $hc.is-ready, "not ready when dep down";
+    is $hc.health-status<status>, "degraded", "status degraded";
+}
+
+# JSON output
+{
+    my $hc = HealthChecker.new;
+    $hc.register-dep("db", True);
+    my $json = $hc.to-json;
+    ok $json.contains('"status":"ok"'), "json has status";
+}

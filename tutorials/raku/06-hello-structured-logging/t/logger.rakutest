@@ -1,0 +1,32 @@
+use Test;
+use lib 'lib';
+use Logger;
+
+plan 6;
+
+# Basic log entry
+{
+    my $json = log-info("server started");
+    ok $json.contains('"level":"info"'), "has level info";
+    ok $json.contains('"message":"server started"'), "has message";
+}
+
+# Log with metadata
+{
+    my $json = log-warn("high latency", :port(8080));
+    ok $json.contains('"level":"warn"'), "warn level";
+    ok $json.contains('"port":8080'), "numeric metadata";
+}
+
+# Error level
+{
+    my $json = log-error("crash");
+    ok $json.contains('"level":"error"'), "error level";
+}
+
+# to-json round trip
+{
+    my %data = name => "test", count => 42;
+    my $json = to-json(%data);
+    ok $json.starts-with('{') && $json.ends-with('}'), "valid JSON shape";
+}

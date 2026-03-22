@@ -1,0 +1,22 @@
+use Test;
+use lib 'lib';
+use Server;
+
+plan 5;
+
+{
+    my ($status, $body) = handle-request("GET / HTTP/1.1");
+    is $status, 200, "root returns 200";
+    ok $body.contains('"Hello, world!"'), "root body has greeting";
+}
+
+{
+    my ($status, $body) = handle-request("GET /greet/Alice HTTP/1.1");
+    is $status, 200, "greet returns 200";
+    ok $body.contains('"Hello, Alice!"'), "greet body has name";
+}
+
+{
+    my ($status, $body) = handle-request("GET /unknown HTTP/1.1");
+    is $status, 404, "unknown path returns 404";
+}

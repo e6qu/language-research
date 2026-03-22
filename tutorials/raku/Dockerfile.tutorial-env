@@ -1,0 +1,22 @@
+# Raku tutorial environment
+# Buildable on linux/arm64 and linux/amd64
+#
+# Build:  docker build -f Dockerfile.tutorial-env -t tutorial-raku .
+# Run:    docker run -it --rm -v $(pwd):/tutorials -w /tutorials tutorial-raku bash
+# Test:   docker run --rm -v $(pwd):/tutorials -w /tutorials/01-hello-world tutorial-raku make test
+
+FROM rakudo-star:latest AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    jq \
+    python3 \
+    ca-certificates \
+    make \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN raku --version | head -2
+
+WORKDIR /tutorials
+
+CMD ["bash"]

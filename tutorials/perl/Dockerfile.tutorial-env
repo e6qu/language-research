@@ -1,0 +1,22 @@
+# Perl tutorial environment
+# Buildable on linux/arm64 and linux/amd64
+#
+# Build:  docker build -f Dockerfile.tutorial-env -t tutorial-perl .
+# Run:    docker run -it --rm -v $(pwd):/tutorials -w /tutorials tutorial-perl bash
+# Test:   docker run --rm -v $(pwd):/tutorials -w /tutorials/01-hello-world tutorial-perl make test
+
+FROM perl:5.40-slim-bookworm AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    jq \
+    python3 \
+    ca-certificates \
+    make \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN perl -v | head -2
+
+WORKDIR /tutorials
+
+CMD ["bash"]

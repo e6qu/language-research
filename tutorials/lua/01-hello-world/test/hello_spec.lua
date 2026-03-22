@@ -1,0 +1,13 @@
+local hello = require("src.hello")
+
+describe("hello", function()
+    it("greet with no arg returns Hello, world!", function()
+        assert.equals("Hello, world!", hello.greet())
+    end)
+    it("greet with name returns greeting", function()
+        assert.equals("Hello, Alice!", hello.greet("Alice"))
+    end)
+    it("greet with empty string returns Hello, world!", function()
+        assert.equals("Hello, world!", hello.greet(""))
+    end)
+end)

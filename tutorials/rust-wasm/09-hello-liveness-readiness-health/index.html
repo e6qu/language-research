@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"><title>09 - Health Dashboard</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; }
+    .card { color: white; padding: 12px 20px; border-radius: 8px; display: inline-block; min-width: 120px; }
+    .card h2 { margin: 0 0 4px 0; font-size: 16px; }
+    .card p, .card strong { margin: 0; }
+    pre { background: #f5f5f5; padding: 16px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Health Dashboard</h1>
+  <div id="output">Loading...</div>
+  <h2>Raw JSON</h2>
+  <pre id="json"></pre>
+  <script type="module">
+    import init from './pkg/hello_liveness_readiness_health.js';
+    await init();
+  </script>
+</body>
+</html>

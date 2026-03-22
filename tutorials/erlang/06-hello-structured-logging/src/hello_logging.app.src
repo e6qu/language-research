@@ -1,0 +1,8 @@
+{application, hello_logging, [
+    {description, "Structured JSON logging demo"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {applications, [kernel, stdlib, jsx]},
+    {env, []},
+    {modules, []}
+]}.

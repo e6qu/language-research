@@ -1,0 +1,8 @@
+{application, hello_concurrency, [
+    {description, "Parallel HTTP fetch demo"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {applications, [kernel, stdlib, inets, ssl]},
+    {env, []},
+    {modules, []}
+]}.

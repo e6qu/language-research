@@ -1,0 +1,23 @@
+# Erlang tutorial environment
+# Buildable on linux/arm64 and linux/amd64
+#
+# Build:  docker build -f Dockerfile.tutorial-env -t tutorial-erlang .
+# Run:    docker run -it --rm -v $(pwd):/tutorials -w /tutorials tutorial-erlang bash
+# Test:   docker run --rm -v $(pwd):/tutorials -w /tutorials/01-hello-world tutorial-erlang rebar3 eunit
+
+FROM erlang:27-slim AS base
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    jq \
+    git \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# rebar3 ships with the erlang image, verify it
+RUN erl -noshell -eval 'io:format("OTP ~s~n", [erlang:system_info(otp_release)]), halt().' \
+    && rebar3 version
+
+WORKDIR /tutorials
+
+CMD ["bash"]

@@ -1,0 +1,27 @@
+use Test;
+use lib 'lib';
+use Concurrent;
+
+plan 5;
+
+# fetch-all empty
+{
+    my @results = fetch-all([]);
+    is @results.elems, 0, "empty urls returns empty";
+}
+
+# fetch-all with urls
+{
+    my @urls = <http://a.com http://b.com http://c.com>;
+    my @results = fetch-all(@urls);
+    is @results.elems, 3, "fetches all urls";
+    is @results[0]<status>, 200, "first result status 200";
+}
+
+# pipeline
+{
+    my @data = 1, 2, 3;
+    my @result = pipeline(@data, -> $x { $x * 2 }, -> $x { $x + 1 });
+    is @result.elems, 3, "pipeline processes all items";
+    ok @result.sort ~~ (3, 5, 7), "pipeline applies stages";
+}

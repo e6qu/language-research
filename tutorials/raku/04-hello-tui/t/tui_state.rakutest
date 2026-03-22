@@ -1,0 +1,25 @@
+use Test;
+use lib 'lib';
+use TuiState;
+
+plan 7;
+
+my $state = TuiState.new;
+
+is $state.cursor, 0, "initial cursor is 0";
+is $state.selected-item, "Raku", "initial selection is Raku";
+
+my $down = $state.move-down;
+is $down.cursor, 1, "move-down increments cursor";
+is $down.selected-item, "Perl", "selection after move-down";
+
+my $up = $state.move-up;
+is $up.cursor, 0, "move-up at top stays at 0";
+
+# Test boundary: move down past end
+my $s = $state;
+$s = $s.move-down for ^10;
+is $s.cursor, 4, "cursor stops at last item";
+
+# Test render
+ok $state.render.contains('> Raku'), "render marks current item";

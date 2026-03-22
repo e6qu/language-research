@@ -1,0 +1,9 @@
+{application, hello_openapi, [
+    {description, "Hello OpenAPI Schema tutorial"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {hello_openapi_app, []}},
+    {applications, [kernel, stdlib, cowboy]},
+    {env, []},
+    {modules, []}
+]}.

@@ -1,0 +1,8 @@
+{application, hello_cli, [
+    {description, "A simple CLI greeting tool"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {applications, [kernel, stdlib]},
+    {env, []},
+    {modules, [hello_cli, hello_cli_format]}
+]}.

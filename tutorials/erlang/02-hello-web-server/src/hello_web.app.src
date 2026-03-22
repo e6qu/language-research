@@ -1,0 +1,9 @@
+{application, hello_web, [
+    {description, "Hello Web Server"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {hello_web_app, []}},
+    {applications, [kernel, stdlib, cowboy]},
+    {env, []},
+    {modules, []}
+]}.
