@@ -28,7 +28,7 @@ pub fn buildJsonGreeting(allocator: std.mem.Allocator, name: []const u8) ![]u8 {
 }
 
 pub fn buildRootJson(allocator: std.mem.Allocator) ![]u8 {
-    return try std.fmt.allocPrint(allocator, "{{\"status\":\"ok\",\"service\":\"hello-web-server\"}}", .{});
+    return try std.fmt.allocPrint(allocator, "{{\"message\":\"Hello, world!\"}}", .{});
 }
 
 test "matchRoute root" {
@@ -69,5 +69,5 @@ test "buildRootJson" {
     const allocator = std.testing.allocator;
     const json = try buildRootJson(allocator);
     defer allocator.free(json);
-    try std.testing.expectEqualStrings("{\"status\":\"ok\",\"service\":\"hello-web-server\"}", json);
+    try std.testing.expectEqualStrings("{\"message\":\"Hello, world!\"}", json);
 }

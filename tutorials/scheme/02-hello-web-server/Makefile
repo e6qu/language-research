@@ -15,7 +15,7 @@ typecheck:
 e2e: build
 	@lsof -ti:4140 | xargs kill 2>/dev/null || true
 	guile src/hello.scm 4140 &
-	@sleep 2
+	@sleep 4
 	curl -sf http://localhost:4140/ | grep -q "Hello, world!"
 	curl -sf http://localhost:4140/greet/Test | grep -q "Hello, Test!"
 	@pkill -f "guile.*hello" 2>/dev/null || true

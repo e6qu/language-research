@@ -32,13 +32,19 @@
 
 (defun handle-request (request-line)
   (cond
-    ((search "GET /greet" request-line)
-     (let ((name (parse-name-from-request request-line)))
-       (http-response 200 "OK" "text/plain" (greet name))))
-    ((search "GET /health" request-line)
-     (http-response 200 "OK" "application/json" "{\"status\":\"ok\"}"))
+    ((search "GET /greet/" request-line)
+     (let* ((prefix-pos (search "/greet/" request-line))
+            (name-start (+ prefix-pos 7))
+            (name-end (position #\Space request-line :start name-start))
+            (name (subseq request-line name-start (or name-end (length request-line)))))
+       (http-response 200 "OK" "application/json"
+                       (format nil "{\"message\":\"Hello, ~A!\"}" name))))
+    ((and (search "GET / " request-line) (not (search "GET /g" request-line)))
+     (http-response 200 "OK" "application/json"
+                     "{\"message\":\"Hello, world!\"}"))
     (t
-     (http-response 404 "Not Found" "text/plain" "Not Found"))))
+     (http-response 404 "Not Found" "application/json"
+                     "{\"error\":\"not found\"}"))))
 
 (defun read-request-line (stream)
   "Read the first line of an HTTP request."

@@ -15,7 +15,7 @@ typecheck:
 e2e: build
 	@lsof -ti:4091 | xargs kill 2>/dev/null || true
 	java -jar target/quarkus-app/quarkus-run.jar &
-	@sleep 8
+	@sleep 12
 	curl -sf http://localhost:4091/work > /dev/null
 	curl -sf http://localhost:4091/metrics | grep -q "work"
 	@pkill -f "quarkus-run" 2>/dev/null || true

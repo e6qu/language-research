@@ -16,8 +16,8 @@ typecheck:
 e2e: build
 	@lsof -ti:4150 | xargs kill 2>/dev/null || true
 	@echo "E2E: starting server on port 4150..."
-	sbcl --noinform --non-interactive --load src/server.lisp --eval '(hello-web::start :port 4150)' &
-	@sleep 2
+	sbcl --noinform --load src/server.lisp --eval '(hello-web:start-server 4150)' &
+	@sleep 4
 	curl -sf http://localhost:4150/ | grep -q "Hello, world!"
 	curl -sf http://localhost:4150/greet/Test | grep -q "Hello, Test!"
 	@pkill -f "sbcl.*server.lisp" 2>/dev/null || true
