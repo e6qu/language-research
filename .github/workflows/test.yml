@@ -64,6 +64,8 @@ jobs:
             -w /tutorials \
             tutorial-${{ matrix.lang }}:ci \
             bash -c '
+              echo "=== CLEAN ==="
+              for d in [0-9]*/; do make -C "$d" clean 2>/dev/null || true; done
               echo "=== BUILD ==="
               for d in [0-9]*/; do echo "--- build $d ---"; make -C "$d" build 2>&1 || true; done
               echo ""
