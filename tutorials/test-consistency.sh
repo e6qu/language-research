@@ -40,12 +40,21 @@ TUTORIALS=(
 
 LANGS=(elixir erlang elm lua tcl perl raku rust rust-wasm golang java java-springboot java-quarkus clojure zig dlang c3 scheme common-lisp)
 
+cleanup_ports() {
+    # Kill any lingering server processes between e2e runs
+    for port in 3000 4000 4001 4002 4003 4010 4020 4021 4027 4029 8080 8081 8082 8083; do
+        lsof -ti:$port 2>/dev/null | xargs kill -9 2>/dev/null || true
+    done
+    sleep 1
+}
+
 run_tutorial() {
     local tutorial="$1"
     echo "=== $tutorial ==="
     for lang in "${LANGS[@]}"; do
         local d="$lang/$tutorial"
         [ -d "$d" ] || continue
+        cleanup_ports
         printf "  %-20s %-40s " "$lang" "$tutorial"
         if timeout 120 make -C "$d" e2e > /tmp/consistency-${lang}-${tutorial}.log 2>&1; then
             echo "PASS"
@@ -56,6 +65,7 @@ run_tutorial() {
             tail -3 /tmp/consistency-${lang}-${tutorial}.log | sed 's/^/    /'
         fi
     done
+    cleanup_ports
 }
 
 # ─── Run selected or all ──────────────────────────────────────
@@ -75,13 +85,5 @@ echo "  Failed:  $FAIL"
 echo "  Total:   $((PASS + FAIL))"
 
 if [ "$FAIL" -gt 0 ]; then
-    echo ""
-    echo "Failed tests:"
-    for t in "${TUTORIALS[@]}"; do
-        for lang in "${LANGS[@]}"; do
-            log="/tmp/consistency-${lang}-${t}.log"
-            [ -f "$log" ] && ! grep -q "E2E: PASS\|e2e passed\|E2E PASSED" "$log" 2>/dev/null && echo "  $lang/$t"
-        done
-    done
     exit 1
 fi
