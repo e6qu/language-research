@@ -43,18 +43,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
       - name: Build tutorial environment
-        uses: docker/build-push-action@v6
-        with:
-          context: tutorials/${{ matrix.lang }}
-          file: tutorials/${{ matrix.lang }}/Dockerfile.tutorial-env
-          tags: tutorial-${{ matrix.lang }}:ci
-          load: true
-          cache-from: type=gha,scope=${{ matrix.lang }}
-          cache-to: type=gha,scope=${{ matrix.lang }},mode=max
+        run: |
+          docker build \
+            -f tutorials/${{ matrix.lang }}/Dockerfile.tutorial-env \
+            -t tutorial-${{ matrix.lang }}:ci \
+            tutorials/${{ matrix.lang }}/
         continue-on-error: ${{ contains(fromJSON('["c3","zig"]'), matrix.lang) }}
 
       - name: Build + Test + E2E
