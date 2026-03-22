@@ -1,0 +1,7 @@
+{
+    "name": "hello-cli",
+    "dependencies": {},
+    "versions": [],
+    "targetType": "executable",
+    "sourcePaths": ["source"]
+}

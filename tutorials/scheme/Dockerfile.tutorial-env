@@ -1,0 +1,6 @@
+FROM debian:bookworm-slim AS base
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    guile-3.0 curl jq python3 ca-certificates make && rm -rf /var/lib/apt/lists/*
+RUN guile --version | head -1
+WORKDIR /tutorials
+CMD ["bash"]

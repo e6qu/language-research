@@ -1,0 +1,7 @@
+{
+    "name": "hello-web-server",
+    "dependencies": {},
+    "versions": [],
+    "targetType": "executable",
+    "sourcePaths": ["source"]
+}

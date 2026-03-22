@@ -10,11 +10,11 @@
 #   make docker-build  — build Docker tutorial environments
 #
 # Per-language: make {test,build,e2e,typecheck}-{lang}
-#   Languages: elixir erlang elm lua tcl perl raku rust rust-wasm golang java java-springboot java-quarkus clojure
+#   Languages: elixir erlang elm lua tcl perl raku rust rust-wasm golang java java-springboot java-quarkus clojure zig dlang c3 scheme common-lisp
 
 SHELL := /bin/bash
 
-LANGUAGES := elixir erlang elm lua tcl perl raku rust rust-wasm golang java java-springboot java-quarkus clojure
+LANGUAGES := elixir erlang elm lua tcl perl raku rust rust-wasm golang java java-springboot java-quarkus clojure zig dlang c3 scheme common-lisp
 
 ELIXIR_TUTORIALS     := $(sort $(wildcard elixir/[0-9]*/))
 ERLANG_TUTORIALS     := $(sort $(wildcard erlang/[0-9]*/))
@@ -30,12 +30,18 @@ JAVA_TUTORIALS       := $(sort $(wildcard java/[0-9]*/))
 SPRINGBOOT_TUTORIALS := $(sort $(wildcard java-springboot/[0-9]*/))
 QUARKUS_TUTORIALS    := $(sort $(wildcard java-quarkus/[0-9]*/))
 CLOJURE_TUTORIALS    := $(sort $(wildcard clojure/[0-9]*/))
+ZIG_TUTORIALS        := $(sort $(wildcard zig/[0-9]*/))
+DLANG_TUTORIALS      := $(sort $(wildcard dlang/[0-9]*/))
+C3_TUTORIALS         := $(sort $(wildcard c3/[0-9]*/))
+SCHEME_TUTORIALS     := $(sort $(wildcard scheme/[0-9]*/))
+CL_TUTORIALS         := $(sort $(wildcard common-lisp/[0-9]*/))
 
 ALL_TUTORIALS := $(ELIXIR_TUTORIALS) $(ERLANG_TUTORIALS) $(ELM_TUTORIALS) \
                  $(LUA_TUTORIALS) $(TCL_TUTORIALS) $(PERL_TUTORIALS) $(RAKU_TUTORIALS) \
                  $(RUST_TUTORIALS) $(RUST_WASM_TUTORIALS) $(GOLANG_TUTORIALS) \
                  $(JAVA_TUTORIALS) $(SPRINGBOOT_TUTORIALS) $(QUARKUS_TUTORIALS) \
-                 $(CLOJURE_TUTORIALS)
+                 $(CLOJURE_TUTORIALS) $(ZIG_TUTORIALS) $(DLANG_TUTORIALS) \
+                 $(C3_TUTORIALS) $(SCHEME_TUTORIALS) $(CL_TUTORIALS)
 
 TOTAL := $(words $(ALL_TUTORIALS))
 
@@ -145,6 +151,26 @@ test-clojure:
 	@echo "=== Testing Clojure tutorials ==="
 	$(call run_target,$(CLOJURE_TUTORIALS),test,Clojure)
 
+test-zig:
+	@echo "=== Testing Zig tutorials ==="
+	$(call run_target,$(ZIG_TUTORIALS),test,Zig)
+
+test-dlang:
+	@echo "=== Testing D tutorials ==="
+	$(call run_target,$(DLANG_TUTORIALS),test,D)
+
+test-c3:
+	@echo "=== Testing C3 tutorials ==="
+	$(call run_target,$(C3_TUTORIALS),test,C3)
+
+test-scheme:
+	@echo "=== Testing Scheme tutorials ==="
+	$(call run_target,$(SCHEME_TUTORIALS),test,Scheme)
+
+test-common-lisp:
+	@echo "=== Testing Common Lisp tutorials ==="
+	$(call run_target,$(CL_TUTORIALS),test,CommonLisp)
+
 build-elixir:
 	@echo "=== Building Elixir tutorials ==="
 	$(call run_target,$(ELIXIR_TUTORIALS),build,Elixir)
@@ -200,6 +226,26 @@ build-java-quarkus:
 build-clojure:
 	@echo "=== Building Clojure tutorials ==="
 	$(call run_target,$(CLOJURE_TUTORIALS),build,Clojure)
+
+build-zig:
+	@echo "=== Building Zig tutorials ==="
+	$(call run_target,$(ZIG_TUTORIALS),build,Zig)
+
+build-dlang:
+	@echo "=== Building D tutorials ==="
+	$(call run_target,$(DLANG_TUTORIALS),build,D)
+
+build-c3:
+	@echo "=== Building C3 tutorials ==="
+	$(call run_target,$(C3_TUTORIALS),build,C3)
+
+build-scheme:
+	@echo "=== Building Scheme tutorials ==="
+	$(call run_target,$(SCHEME_TUTORIALS),build,Scheme)
+
+build-common-lisp:
+	@echo "=== Building Common Lisp tutorials ==="
+	$(call run_target,$(CL_TUTORIALS),build,CommonLisp)
 
 e2e-elixir:
 	@echo "=== E2E Elixir tutorials ==="
@@ -257,6 +303,26 @@ e2e-clojure:
 	@echo "=== E2E Clojure tutorials ==="
 	$(call run_target,$(CLOJURE_TUTORIALS),e2e,Clojure)
 
+e2e-zig:
+	@echo "=== E2E Zig tutorials ==="
+	$(call run_target,$(ZIG_TUTORIALS),e2e,Zig)
+
+e2e-dlang:
+	@echo "=== E2E D tutorials ==="
+	$(call run_target,$(DLANG_TUTORIALS),e2e,D)
+
+e2e-c3:
+	@echo "=== E2E C3 tutorials ==="
+	$(call run_target,$(C3_TUTORIALS),e2e,C3)
+
+e2e-scheme:
+	@echo "=== E2E Scheme tutorials ==="
+	$(call run_target,$(SCHEME_TUTORIALS),e2e,Scheme)
+
+e2e-common-lisp:
+	@echo "=== E2E Common Lisp tutorials ==="
+	$(call run_target,$(CL_TUTORIALS),e2e,CommonLisp)
+
 typecheck-elixir:
 	@echo "=== Type-checking Elixir tutorials ==="
 	$(call run_target,$(ELIXIR_TUTORIALS),typecheck,Elixir)
@@ -312,6 +378,26 @@ typecheck-java-quarkus:
 typecheck-clojure:
 	@echo "=== Type-checking Clojure tutorials ==="
 	$(call run_target,$(CLOJURE_TUTORIALS),typecheck,Clojure)
+
+typecheck-zig:
+	@echo "=== Type-checking Zig tutorials ==="
+	$(call run_target,$(ZIG_TUTORIALS),typecheck,Zig)
+
+typecheck-dlang:
+	@echo "=== Type-checking D tutorials ==="
+	$(call run_target,$(DLANG_TUTORIALS),typecheck,D)
+
+typecheck-c3:
+	@echo "=== Type-checking C3 tutorials ==="
+	$(call run_target,$(C3_TUTORIALS),typecheck,C3)
+
+typecheck-scheme:
+	@echo "=== Type-checking Scheme tutorials ==="
+	$(call run_target,$(SCHEME_TUTORIALS),typecheck,Scheme)
+
+typecheck-common-lisp:
+	@echo "=== Type-checking Common Lisp tutorials ==="
+	$(call run_target,$(CL_TUTORIALS),typecheck,CommonLisp)
 
 # ─── Binary artifact targets ──────────────────────────────────
 
@@ -433,3 +519,23 @@ docker-java-quarkus:
 docker-clojure:
 	@echo "=== Building Clojure Docker image ==="
 	docker build -f clojure/Dockerfile.tutorial-env -t tutorial-clojure clojure/
+
+docker-zig:
+	@echo "=== Building Zig Docker image ==="
+	docker build -f zig/Dockerfile.tutorial-env -t tutorial-zig zig/
+
+docker-dlang:
+	@echo "=== Building D Docker image ==="
+	docker build -f dlang/Dockerfile.tutorial-env -t tutorial-dlang dlang/
+
+docker-c3:
+	@echo "=== Building C3 Docker image ==="
+	docker build -f c3/Dockerfile.tutorial-env -t tutorial-c3 c3/
+
+docker-scheme:
+	@echo "=== Building Scheme Docker image ==="
+	docker build -f scheme/Dockerfile.tutorial-env -t tutorial-scheme scheme/
+
+docker-common-lisp:
+	@echo "=== Building Common Lisp Docker image ==="
+	docker build -f common-lisp/Dockerfile.tutorial-env -t tutorial-common-lisp common-lisp/

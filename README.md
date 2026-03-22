@@ -1,8 +1,8 @@
 # language-research
 
-A multi-language comparison project exploring the suitability of 14 languages and frameworks for building AI agents, CLIs, web servers, TUIs, and web GUIs.
+A multi-language comparison project exploring the suitability of 19 languages and frameworks for building AI agents, CLIs, web servers, TUIs, and web GUIs.
 
-**126 tutorials** (14 tracks × 9 topics), each with source code, unit tests, E2E tests, and a uniform Makefile. **15 summary documents** comparing type systems, error handling, concurrency models, protocol support, binary distribution, and notable production software.
+**171 tutorials** (19 tracks × 9 topics), each with source code, unit tests, E2E tests, and a uniform Makefile. **20 summary documents** comparing type systems, error handling, concurrency models, protocol support, binary distribution, and notable production software.
 
 ## Languages
 
@@ -22,6 +22,11 @@ A multi-language comparison project exploring the suitability of 14 languages an
 | **Spring Boot** | Static | @Async / WebFlux | Fat JAR / Spring Native | Spring Boot Test |
 | **Quarkus** | Static | Mutiny reactive / virtual threads | Native binary (GraalVM AoT) | @QuarkusTest |
 | **Clojure** | Dynamic (spec, Malli) | Atoms / refs (STM) / core.async | lein uberjar / GraalVM | clojure.test |
+| **Zig** | Static (comptime) | std.Thread | Static binary (~100 KB-2 MB) | built-in test |
+| **D** | Static (templates/mixins) | std.parallelism | DUB build / LDC | built-in unittest |
+| **C3** | Static (contracts) | — | c3c build | built-in test |
+| **Scheme** | Dynamic (Guile) | futures (ice-9) | Chicken compiled | SRFI-64 |
+| **Common Lisp** | Dynamic (CLOS) | sb-thread | save-lisp-and-die (~50-80 MB) | custom assertions |
 
 ## Tutorials
 
@@ -106,6 +111,11 @@ In-depth comparison docs at the project root:
 | [JAVA_SPRINGBOOT.md](JAVA_SPRINGBOOT.md) | Auto-config, actuator, micrometer, Spring Native |
 | [JAVA_QUARKUS.md](JAVA_QUARKUS.md) | Build-time DI, GraalVM native, MicroProfile, Dev Services |
 | [CLOJURE.md](CLOJURE.md) | Persistent data, STM, core.async, spec, REPL-driven dev |
+| [ZIG.md](ZIG.md) | Comptime, no hidden allocations, cross-compilation |
+| [DLANG.md](DLANG.md) | Templates, mixins, GC optional, betterC mode |
+| [C3.md](C3.md) | C evolution, contracts, no undefined behavior |
+| [SCHEME.md](SCHEME.md) | Minimal Lisp, continuations, hygienic macros |
+| [COMMON_LISP.md](COMMON_LISP.md) | CLOS, conditions/restarts, image-based development |
 
 ## Development Environments
 
@@ -159,7 +169,12 @@ language-research/
     ├── java/
     ├── java-springboot/
     ├── java-quarkus/
-    └── clojure/
+    ├── clojure/
+    ├── zig/
+    ├── dlang/
+    ├── c3/
+    ├── scheme/
+    └── common-lisp/
 ```
 
 ## Binary Size Comparison

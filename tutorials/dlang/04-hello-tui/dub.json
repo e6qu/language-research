@@ -1,0 +1,7 @@
+{
+    "name": "hello-tui",
+    "dependencies": {},
+    "versions": [],
+    "targetType": "executable",
+    "sourcePaths": ["source"]
+}

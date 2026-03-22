@@ -1,0 +1,12 @@
+{
+    "name": "hello-openapi",
+    "version": "0.1.0",
+    "authors": ["Tutorial"],
+    "langrev": "1",
+    "sources": ["src/**"],
+    "targets": {
+        "hello-openapi": {
+            "type": "executable"
+        }
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "name": "hello-concurrency",
+    "dependencies": {},
+    "versions": [],
+    "targetType": "executable",
+    "sourcePaths": ["source"]
+}

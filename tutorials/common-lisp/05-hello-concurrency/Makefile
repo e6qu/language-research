@@ -1,0 +1,24 @@
+.PHONY: build clean test typecheck e2e fatbin
+
+build:
+	@echo "Common Lisp is interpreted/compiled at load time"
+	sbcl --noinform --non-interactive --load src/concurrency.lisp --eval '(quit)'
+
+clean:
+	rm -f *.fasl src/*.fasl test/*.fasl hello-concurrency
+
+test:
+	sbcl --noinform --non-interactive --load test/run.lisp
+
+typecheck:
+	sbcl --noinform --non-interactive --load src/concurrency.lisp --eval '(quit)' && echo "Syntax OK"
+
+e2e: build
+	sbcl --noinform --non-interactive --load src/concurrency.lisp \
+	  --eval '(let ((c (hello-concurrency:make-counter))) (hello-concurrency:counter-increment c 42) (assert (= 42 (hello-concurrency:counter-value c))) (format t "E2E passed~%"))' \
+	  --eval '(quit)'
+
+fatbin:
+	sbcl --noinform --non-interactive --load src/concurrency.lisp \
+	  --eval '(sb-ext:save-lisp-and-die "hello-concurrency" :toplevel (function hello-concurrency:main) :executable t)'
+	@ls -la hello-concurrency 2>/dev/null

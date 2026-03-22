@@ -1,0 +1,12 @@
+{
+    "name": "hello",
+    "version": "0.1.0",
+    "authors": ["Tutorial"],
+    "langrev": "1",
+    "sources": ["src/**"],
+    "targets": {
+        "hello": {
+            "type": "executable"
+        }
+    }
+}

@@ -1,0 +1,6 @@
+FROM dlang2/ldc-ubuntu:latest AS base
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl jq python3 ca-certificates make && rm -rf /var/lib/apt/lists/*
+RUN ldc2 --version | head -1 && dub --version | head -1
+WORKDIR /tutorials
+CMD ["bash"]

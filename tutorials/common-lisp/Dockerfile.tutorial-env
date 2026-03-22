@@ -1,0 +1,6 @@
+FROM debian:bookworm-slim AS base
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    sbcl curl jq python3 ca-certificates make && rm -rf /var/lib/apt/lists/*
+RUN sbcl --version
+WORKDIR /tutorials
+CMD ["bash"]

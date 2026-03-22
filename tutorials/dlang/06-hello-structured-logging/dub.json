@@ -1,0 +1,7 @@
+{
+    "name": "hello-structured-logging",
+    "dependencies": {},
+    "versions": [],
+    "targetType": "executable",
+    "sourcePaths": ["source"]
+}

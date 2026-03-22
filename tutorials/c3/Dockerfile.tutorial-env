@@ -1,0 +1,7 @@
+FROM debian:bookworm-slim AS base
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl jq python3 ca-certificates make && rm -rf /var/lib/apt/lists/*
+# C3 must be installed manually — see https://c3-lang.org/install/
+RUN echo "Install c3c from https://c3-lang.org before running tutorials"
+WORKDIR /tutorials
+CMD ["bash"]

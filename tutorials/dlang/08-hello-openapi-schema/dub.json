@@ -1,0 +1,7 @@
+{
+    "name": "hello-openapi-schema",
+    "dependencies": {},
+    "versions": [],
+    "targetType": "executable",
+    "sourcePaths": ["source"]
+}
