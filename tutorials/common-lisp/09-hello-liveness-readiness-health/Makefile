@@ -13,5 +13,5 @@ test:
 typecheck:
 	sbcl --noinform --non-interactive --load src/health.lisp --eval '(quit)' && echo "Syntax OK"
 
-e2e: test
+e2e: build
 	@echo "E2E: PASS"

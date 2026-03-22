@@ -14,7 +14,7 @@ typecheck:
 
 e2e: fatbin
 	java -jar target/*-jar-with-dependencies.jar &
-	sleep 3
+	sleep 5
 	curl -sf http://localhost:4073/healthz | grep -q "status"
 	pkill -f "jar-with-dependencies" 2>/dev/null || true
 	@echo "E2E: PASS"
