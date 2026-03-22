@@ -1,6 +1,6 @@
 FROM golang:1.23-bookworm AS base
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y --no-install-recommends make \
     curl jq python3 ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
