@@ -15,7 +15,7 @@ typecheck:
 e2e: build
 	@echo "Starting server on port 4027..."
 	@lein run 4027 &
-	@sleep 5
+	@sleep 10
 	@curl -sf http://localhost:4027/metrics | grep -q "metrics_scrapes_total" && echo "GET /metrics OK"
 	@pkill -f "hello-metrics.*4027" 2>/dev/null || true
 	@echo "E2E: PASS"

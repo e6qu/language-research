@@ -47,7 +47,8 @@ pub fn buildLogJson(allocator: std.mem.Allocator, level: Level, message: []const
 pub fn writeLog(writer: anytype, allocator: std.mem.Allocator, level: Level, message: []const u8, service: []const u8) !void {
     const json = try buildLogJson(allocator, level, message, service);
     defer allocator.free(json);
-    try writer.print("{s}\n", .{json});
+    try writer.writeAll(json);
+    try writer.writeAll("\n");
 }
 
 pub const Logger = struct {

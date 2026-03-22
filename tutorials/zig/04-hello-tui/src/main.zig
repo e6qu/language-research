@@ -2,7 +2,11 @@ const std = @import("std");
 const hello = @import("hello.zig");
 
 pub fn main() !void {
-    const stdin = std.io.getStdIn();
+    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
+    defer _ = gpa.deinit();
+    const allocator = gpa.allocator();
+
+    const stdin = std.fs.File.stdin();
     const stdout = std.fs.File.stdout();
 
     const items = &[_][]const u8{
@@ -14,9 +18,10 @@ pub fn main() !void {
     var state = hello.State{ .items = items };
 
     // Set terminal to raw mode
-    var original_termios = try std.posix.tcgetattr(stdin.handle);
+    const original_termios = try std.posix.tcgetattr(stdin.handle);
     var raw = original_termios;
-    raw.lflag = raw.lflag.fromInt(raw.lflag.toInt() & ~@as(u32, @intFromEnum(std.posix.LFLAG.ICANON) | @intFromEnum(std.posix.LFLAG.ECHO)));
+    raw.lflag.ICANON = false;
+    raw.lflag.ECHO = false;
     try std.posix.tcsetattr(stdin.handle, .FLUSH, raw);
     defer std.posix.tcsetattr(stdin.handle, .FLUSH, original_termios) catch {};
 
@@ -24,7 +29,7 @@ pub fn main() !void {
     try stdout.writeAll("\x1b[?25l");
     defer stdout.writeAll("\x1b[?25h") catch {};
 
-    try hello.render(stdout, &state);
+    try renderToFile(allocator, stdout, &state);
 
     while (true) {
         var buf: [1]u8 = undefined;
@@ -37,9 +42,19 @@ pub fn main() !void {
             'j' => state.moveDown(),
             else => continue,
         }
-        try hello.render(stdout, &state);
+        try renderToFile(allocator, stdout, &state);
     }
 
     try stdout.writeAll(hello.CLEAR_SCREEN);
-    try stdout.print("Selected: {s}\n", .{state.selected()});
+    const selected_msg = try std.fmt.allocPrint(allocator, "Selected: {s}\n", .{state.selected()});
+    defer allocator.free(selected_msg);
+    try stdout.writeAll(selected_msg);
+}
+
+fn renderToFile(allocator: std.mem.Allocator, stdout: std.fs.File, state: *const hello.State) !void {
+    _ = allocator;
+    var buf: [4096]u8 = undefined;
+    var fbs = std.io.fixedBufferStream(&buf);
+    try hello.render(fbs.writer(), state);
+    try stdout.writeAll(fbs.getWritten());
 }

@@ -13,7 +13,7 @@ typecheck:
 	zig build test -Doptimize=Debug 2>&1 | head -1 || true
 
 e2e: build
-	./zig-out/bin/hello-openapi-schema | python3 -m json.tool
+	./zig-out/bin/hello_openapi_schema | python3 -m json.tool
 
 fatbin:
 	zig build -Doptimize=ReleaseSafe

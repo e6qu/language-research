@@ -13,7 +13,7 @@ typecheck:
 	zig build test -Doptimize=Debug 2>&1 | head -1 || true
 
 e2e: build
-	./zig-out/bin/hello-concurrency
+	./zig-out/bin/hello_concurrency
 
 fatbin:
 	zig build -Doptimize=ReleaseSafe

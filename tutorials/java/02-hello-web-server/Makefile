@@ -13,7 +13,13 @@ typecheck:
 	mvn -q compile
 
 e2e: build
-	mvn -q exec:java -Dexec.mainClass="hello.Main" | grep -q "Hello"
+	@lsof -ti:8080 | xargs kill 2>/dev/null || true
+	@sleep 1
+	java -cp target/*-jar-with-dependencies.jar hello.Main 8080 &
+	@sleep 2
+	curl -s http://localhost:8080/ | grep -q "Hello"
+	curl -s http://localhost:8080/greet/Test | grep -q "Hello, Test!"
+	@kill %1 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

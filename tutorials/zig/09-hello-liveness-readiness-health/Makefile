@@ -13,7 +13,7 @@ typecheck:
 	zig build test -Doptimize=Debug 2>&1 | head -1 || true
 
 e2e: build
-	./zig-out/bin/hello-liveness-readiness-health &
+	./zig-out/bin/hello_liveness_readiness_health &
 	sleep 1
 	curl -s http://127.0.0.1:8080/livez | python3 -m json.tool
 	curl -s http://127.0.0.1:8080/readyz | python3 -m json.tool

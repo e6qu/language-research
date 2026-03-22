@@ -13,7 +13,7 @@ typecheck:
 	zig build test -Doptimize=Debug 2>&1 | head -1 || true
 
 e2e: build
-	@echo "Run interactively: ./zig-out/bin/hello-tui"
+	@echo "Run interactively: ./zig-out/bin/hello_tui"
 
 fatbin:
 	zig build -Doptimize=ReleaseSafe

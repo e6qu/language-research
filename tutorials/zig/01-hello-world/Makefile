@@ -13,8 +13,8 @@ typecheck:
 	zig build test -Doptimize=Debug 2>&1 | head -1 || true
 
 e2e: build
-	./zig-out/bin/hello
-	./zig-out/bin/hello Zig
+	./zig-out/bin/hello_world
+	./zig-out/bin/hello_world Zig
 
 fatbin:
 	zig build -Doptimize=ReleaseSafe

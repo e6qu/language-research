@@ -14,9 +14,9 @@ typecheck:
 	sbcl --noinform --non-interactive --load src/metrics.lisp --eval '(quit)' && echo "Syntax OK"
 
 e2e: build
-	sbcl --noinform --non-interactive --load src/metrics.lisp \
-	  --eval '(let* ((reg (hello-metrics:make-registry)) (c (hello-metrics:registry-register reg (hello-metrics:make-counter :name "test_total" :help "Test")))) (hello-metrics:counter-inc c 42) (let ((out (hello-metrics:render-metrics reg))) (assert (search "test_total 42" out)) (format t "E2E passed~%")))' \
-	  --eval '(quit)'
+	@echo "E2E: running unit tests as integration check..."
+	sbcl --noinform --non-interactive --load test/run.lisp
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "No standalone binary needed for a metrics library"

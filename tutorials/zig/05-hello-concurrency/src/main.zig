@@ -14,7 +14,9 @@ pub fn main() !void {
     };
 
     const stdout = std.fs.File.stdout();
-    try stdout.print("Fetching {d} URLs concurrently...\n\n", .{urls.len});
+    const header = try std.fmt.allocPrint(allocator, "Fetching {d} URLs concurrently...\n\n", .{urls.len});
+    defer allocator.free(header);
+    try stdout.writeAll(header);
 
     var timer = try std.time.Timer.start();
     const results = try hello.fetchConcurrently(allocator, urls);
@@ -22,8 +24,12 @@ pub fn main() !void {
     const elapsed_ms = timer.read() / std.time.ns_per_ms;
 
     for (results) |r| {
-        try stdout.print("  thread={d} url={s} latency={d}ms\n", .{ r.thread_id, r.url, r.latency_ms });
+        const line = try std.fmt.allocPrint(allocator, "  thread={d} url={s} latency={d}ms\n", .{ r.thread_id, r.url, r.latency_ms });
+        defer allocator.free(line);
+        try stdout.writeAll(line);
     }
 
-    try stdout.print("\nTotal wall time: {d}ms\n", .{elapsed_ms});
+    const footer = try std.fmt.allocPrint(allocator, "\nTotal wall time: {d}ms\n", .{elapsed_ms});
+    defer allocator.free(footer);
+    try stdout.writeAll(footer);
 }

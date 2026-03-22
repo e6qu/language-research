@@ -13,7 +13,12 @@ typecheck:
 	ldc2 -o- source/hello.d source/app.d
 
 e2e: build
-	./hello | head -1 | grep -qi "hello"
+	@lsof -ti:8080 | xargs kill 2>/dev/null || true
+	@sleep 1
+	./hello &
+	@sleep 1
+	curl -s http://localhost:8080/ | grep -qi "hello"
+	@kill %1 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

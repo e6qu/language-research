@@ -11,5 +11,6 @@ pub fn main() !void {
     defer allocator.free(json);
 
     const stdout = std.fs.File.stdout();
-    try stdout.writeAll(, .{json});
+    try stdout.writeAll(json);
+    try stdout.writeAll("\n");
 }

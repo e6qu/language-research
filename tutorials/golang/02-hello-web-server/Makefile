@@ -14,6 +14,8 @@ typecheck:
 	go vet ./...
 
 e2e: build
+	@lsof -ti:8080 | xargs kill 2>/dev/null || true
+	@sleep 1
 	./hello &
 	@sleep 1
 	curl -s http://localhost:8080/ | grep -q "Hello, World!" && echo "PASS: root"

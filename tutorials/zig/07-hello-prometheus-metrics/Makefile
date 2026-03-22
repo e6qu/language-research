@@ -13,7 +13,7 @@ typecheck:
 	zig build test -Doptimize=Debug 2>&1 | head -1 || true
 
 e2e: build
-	./zig-out/bin/hello-prometheus-metrics
+	./zig-out/bin/hello_prometheus_metrics
 
 fatbin:
 	zig build -Doptimize=ReleaseSafe

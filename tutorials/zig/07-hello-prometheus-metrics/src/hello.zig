@@ -14,9 +14,19 @@ pub const Counter = struct {
     }
 
     pub fn format(self: *const Counter, writer: anytype) !void {
-        try writer.print("# HELP {s} {s}\n", .{ self.name, self.help });
-        try writer.print("# TYPE {s} counter\n", .{self.name});
-        try writer.print("{s} {d}\n", .{ self.name, self.value });
+        try writer.writeAll("# HELP ");
+        try writer.writeAll(self.name);
+        try writer.writeAll(" ");
+        try writer.writeAll(self.help);
+        try writer.writeAll("\n# TYPE ");
+        try writer.writeAll(self.name);
+        try writer.writeAll(" counter\n");
+        try writer.writeAll(self.name);
+        try writer.writeAll(" ");
+        var num_buf: [20]u8 = undefined;
+        const num_str = std.fmt.bufPrint(&num_buf, "{d}", .{self.value}) catch unreachable;
+        try writer.writeAll(num_str);
+        try writer.writeAll("\n");
     }
 };
 
@@ -38,9 +48,19 @@ pub const Gauge = struct {
     }
 
     pub fn format(self: *const Gauge, writer: anytype) !void {
-        try writer.print("# HELP {s} {s}\n", .{ self.name, self.help });
-        try writer.print("# TYPE {s} gauge\n", .{self.name});
-        try writer.print("{s} {d}\n", .{ self.name, self.value });
+        try writer.writeAll("# HELP ");
+        try writer.writeAll(self.name);
+        try writer.writeAll(" ");
+        try writer.writeAll(self.help);
+        try writer.writeAll("\n# TYPE ");
+        try writer.writeAll(self.name);
+        try writer.writeAll(" gauge\n");
+        try writer.writeAll(self.name);
+        try writer.writeAll(" ");
+        var num_buf: [20]u8 = undefined;
+        const num_str = std.fmt.bufPrint(&num_buf, "{d}", .{self.value}) catch unreachable;
+        try writer.writeAll(num_str);
+        try writer.writeAll("\n");
     }
 };
 

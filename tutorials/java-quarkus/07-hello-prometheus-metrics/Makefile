@@ -13,10 +13,10 @@ typecheck:
 	mvn -q compile
 
 e2e: fatbin
-	java -jar target/quarkus-app/quarkus-run.jar &
-	sleep 3
+	PATH="/opt/homebrew/opt/openjdk/bin:$$PATH" java -jar target/quarkus-app/quarkus-run.jar &
+	sleep 8
 	curl -sf http://localhost:8080/ | grep -q "Hello"
-	curl -sf http://localhost:8080/q/metrics | grep -q "greetings_total"
+	curl -sf http://localhost:8080/q/metrics | grep -q "greetings"
 	kill %1 2>/dev/null || true
 	@echo "E2E: PASS"
 

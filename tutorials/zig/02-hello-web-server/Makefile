@@ -13,7 +13,7 @@ typecheck:
 	zig build test -Doptimize=Debug 2>&1 | head -1 || true
 
 e2e: build
-	./zig-out/bin/hello-web-server &
+	./zig-out/bin/hello_web_server &
 	sleep 1
 	curl -s http://127.0.0.1:8080/ | python3 -m json.tool
 	curl -s http://127.0.0.1:8080/greet/Zig | python3 -m json.tool

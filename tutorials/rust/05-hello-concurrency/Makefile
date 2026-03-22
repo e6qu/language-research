@@ -13,7 +13,7 @@ typecheck:
 	cargo check
 
 e2e: build
-	./target/debug/hello-concurrency | grep -q "bytes"
+	./target/release/hello-concurrency | grep -q "bytes"
 	@echo "e2e passed"
 
 fatbin:

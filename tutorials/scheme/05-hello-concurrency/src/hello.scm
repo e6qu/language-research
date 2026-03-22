@@ -32,4 +32,5 @@
          (par (timed-run "parallel"   (lambda () (parallel-map slow-square items)))))
     (format #t "Sequential: ~a (~a us)~%" (car seq) (cdr seq))
     (format #t "Parallel:   ~a (~a us)~%" (car par) (cdr par))
-    (format #t "Speedup:    ~,1fx~%" (/ (cdr seq) (max 1 (cdr par))))))
+    (let ((speedup (exact->inexact (/ (cdr seq) (max 1 (cdr par))))))
+      (format #t "Speedup:    ~1,1fx~%" speedup))))

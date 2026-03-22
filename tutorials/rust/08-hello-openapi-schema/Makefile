@@ -13,7 +13,7 @@ typecheck:
 	cargo check
 
 e2e: build
-	./target/debug/hello-openapi-schema &
+	./target/release/hello-openapi-schema &
 	sleep 1
 	curl -s http://localhost:3000/api/openapi | python3 -c "import sys,json; d=json.load(sys.stdin); assert 'openapi' in d"
 	kill %1

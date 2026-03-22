@@ -39,6 +39,17 @@
   (push metric (registry-metrics registry))
   metric)
 
+;;; --- Constructors (wrappers around struct constructors) ---
+
+(defun make-counter (&key name help)
+  (make-prom-counter :name name :help help))
+
+(defun make-gauge (&key name help)
+  (make-prom-gauge :name name :help help))
+
+(defun make-histogram (&key name help)
+  (make-prom-histogram :name name :help help))
+
 ;;; --- Counter operations ---
 
 (defun counter-inc (counter &optional (delta 1))

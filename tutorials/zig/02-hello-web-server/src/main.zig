@@ -16,42 +16,57 @@ pub fn main() !void {
         var conn = try server.accept();
         defer conn.stream.close();
 
-        var buf: [4096]u8 = undefined;
-        var http_server = std.http.Server.init(conn, &buf);
+        // Read request
+        var req_buf: [4096]u8 = undefined;
+        const n = conn.stream.read(&req_buf) catch continue;
+        if (n == 0) continue;
 
-        var req = http_server.receiveHead() catch continue;
-        handleRequest(allocator, &req) catch |err| {
+        const request_line = blk: {
+            const end = std.mem.indexOf(u8, req_buf[0..n], "\r\n") orelse n;
+            break :blk req_buf[0..end];
+        };
+
+        // Parse path from "GET /path HTTP/1.1"
+        const path = parsePath(request_line);
+        handleRequest(allocator, conn.stream, path) catch |err| {
             std.log.err("Request error: {}", .{err});
             continue;
         };
     }
 }
 
-fn handleRequest(allocator: std.mem.Allocator, req: *std.http.Server.Request) !void {
-    const path = req.head.target;
+fn parsePath(request_line: []const u8) []const u8 {
+    // Find first space (after method)
+    const start = (std.mem.indexOf(u8, request_line, " ") orelse return "/") + 1;
+    const rest = request_line[start..];
+    const end = std.mem.indexOf(u8, rest, " ") orelse rest.len;
+    return rest[0..end];
+}
+
+fn handleRequest(allocator: std.mem.Allocator, stream: std.net.Stream, path: []const u8) !void {
     const route = hello.matchRoute(path);
 
     switch (route) {
         .root => {
             const body = try hello.buildRootJson(allocator);
             defer allocator.free(body);
-            try req.respond(body, .{
-                .extra_headers = &.{.{ .name = "content-type", .value = "application/json" }},
-            });
+            try sendResponse(allocator, stream, "200 OK", body);
         },
         .greet => {
             const name = hello.extractName(path);
             const body = try hello.buildJsonGreeting(allocator, name);
             defer allocator.free(body);
-            try req.respond(body, .{
-                .extra_headers = &.{.{ .name = "content-type", .value = "application/json" }},
-            });
+            try sendResponse(allocator, stream, "200 OK", body);
         },
         .not_found => {
-            try req.respond("{\"error\":\"not found\"}", .{
-                .status = .not_found,
-                .extra_headers = &.{.{ .name = "content-type", .value = "application/json" }},
-            });
+            try sendResponse(allocator, stream, "404 Not Found", "{\"error\":\"not found\"}");
         },
     }
+}
+
+fn sendResponse(allocator: std.mem.Allocator, stream: std.net.Stream, status: []const u8, body: []const u8) !void {
+    const header = try std.fmt.allocPrint(allocator, "HTTP/1.1 {s}\r\nContent-Type: application/json\r\nContent-Length: {d}\r\nConnection: close\r\n\r\n", .{ status, body.len });
+    defer allocator.free(header);
+    try stream.writeAll(header);
+    try stream.writeAll(body);
 }

@@ -13,7 +13,7 @@ typecheck:
 	cargo check
 
 e2e: build
-	./target/debug/hello-prometheus-metrics &
+	./target/release/hello-prometheus-metrics &
 	sleep 1
 	curl -s -X POST http://localhost:3000/work
 	curl -s http://localhost:3000/metrics | grep -q "work_total"

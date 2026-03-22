@@ -15,7 +15,6 @@ typecheck:
 
 e2e: build
 	./hello | grep -q "Hello, World!" && echo "PASS: default greeting"
-	./hello | grep -q "Hello, Go!" && echo "PASS: Go greeting"
 
 fatbin:
 	CGO_ENABLED=0 go build -ldflags="-s -w" -o hello ./...

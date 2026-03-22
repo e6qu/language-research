@@ -13,7 +13,7 @@ typecheck:
 	cargo check
 
 e2e: build
-	./target/debug/hello-web-server &
+	./target/release/hello-web-server &
 	sleep 1
 	curl -s http://localhost:3000/ | grep -q "Hello, World!"
 	curl -s http://localhost:3000/greet/Test | grep -q "Hello, Test!"

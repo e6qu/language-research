@@ -1,3 +1,5 @@
+(require :sb-bsd-sockets)
+
 (defpackage :hello-web
   (:use :cl)
   (:export #:start-server #:greet))
