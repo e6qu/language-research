@@ -1,4 +1,4 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
 	@echo "Scheme is interpreted — no compilation step"
@@ -19,3 +19,12 @@ e2e: build
 fatbin:
 	@echo "No fat binary support for Scheme"
 	@echo "Consider Chicken Scheme (csc) for compiled binaries"
+
+lint:
+	@echo "No standard Scheme linter"
+
+autoformat:
+	@echo "No standard Scheme formatter"
+
+format-check:
+	@echo "No standard Scheme formatter"

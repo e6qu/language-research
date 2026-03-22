@@ -1,7 +1,7 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	cargo build
+	cargo build --release
 
 clean:
 	cargo clean
@@ -18,3 +18,12 @@ e2e: build
 fatbin:
 	cargo build --release
 	@ls -la target/release/hello-tui
+
+lint:
+	cargo clippy -- -D warnings
+
+autoformat:
+	cargo fmt
+
+format-check:
+	cargo fmt -- --check

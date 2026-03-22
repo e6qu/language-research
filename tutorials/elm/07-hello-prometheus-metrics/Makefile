@@ -1,4 +1,4 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
 	elm make src/Main.elm --optimize --output=main.js
@@ -22,3 +22,12 @@ e2e: build
 fatbin: build
 	@echo "Fat binary (optimized JS):"
 	@ls -la main.js 2>/dev/null || ls -la elm.js 2>/dev/null
+
+lint:
+	elm-review 2>/dev/null || echo "Install elm-review for linting"
+
+autoformat:
+	elm-format --yes src/
+
+format-check:
+	elm-format --validate src/

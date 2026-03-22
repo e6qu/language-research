@@ -1,7 +1,7 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	@which c3c > /dev/null 2>&1 && c3c build || echo "c3c not found — install from https://c3-lang.org"
+	@which c3c > /dev/null 2>&1 && c3c build --release || echo "c3c not found — install from https://c3-lang.org"
 
 clean:
 	rm -rf build/
@@ -18,3 +18,12 @@ e2e: build
 fatbin: build
 	@echo "Fat binary (if built):"
 	@ls -la build/hello-health 2>/dev/null || echo "not built"
+
+lint:
+	@which c3c > /dev/null 2>&1 && c3c build 2>&1 || echo "c3c not found — install from https://c3-lang.org"
+
+autoformat:
+	@echo "No standard C3 formatter"
+
+format-check:
+	@echo "No standard C3 formatter"

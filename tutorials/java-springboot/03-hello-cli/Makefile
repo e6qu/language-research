@@ -1,7 +1,7 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	mvn -q compile
+	mvn -q package -DskipTests
 
 clean:
 	mvn -q clean
@@ -20,3 +20,12 @@ fatbin:
 	mvn -q package -DskipTests
 	@echo "Fat JAR:"
 	@ls -la target/*.jar | grep -v original
+
+lint:
+	mvn -q compile
+
+autoformat:
+	@echo "Use spotless plugin"
+
+format-check:
+	@echo "Use spotless plugin"

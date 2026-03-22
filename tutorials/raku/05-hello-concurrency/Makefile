@@ -1,4 +1,4 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
 	raku -c lib/Concurrent.rakumod
@@ -19,3 +19,12 @@ e2e: build
 fatbin:
 	@echo "Raku does not have a mature fat binary tool"
 	@echo "Use: raku --precompile for faster startup"
+
+lint:
+	raku -c lib/*.rakumod
+
+autoformat:
+	@echo "No standard Raku formatter"
+
+format-check:
+	@echo "No standard Raku formatter"

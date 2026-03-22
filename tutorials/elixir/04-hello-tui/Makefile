@@ -1,10 +1,10 @@
-.PHONY: build clean test typecheck deps e2e fatbin
+.PHONY: build clean test typecheck deps e2e fatbin lint autoformat format-check
 
 deps:
 	mix deps.get --quiet
 
 build: deps
-	mix compile
+	MIX_ENV=prod mix compile
 
 clean:
 	rm -rf _build deps mix.lock
@@ -23,3 +23,12 @@ fatbin: deps
 	MIX_ENV=prod mix release --overwrite
 	@echo "Fat binary: _build/prod/rel/hello_tui/"
 	@du -sh _build/prod/rel/hello_tui/
+
+lint:
+	mix credo 2>/dev/null || mix compile --warnings-as-errors
+
+autoformat:
+	mix format
+
+format-check:
+	mix format --check-formatted

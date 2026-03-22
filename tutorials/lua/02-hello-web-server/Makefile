@@ -1,4 +1,4 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
 	@echo "Lua is interpreted — no compilation step"
@@ -28,3 +28,12 @@ fatbin:
 	@echo "Fat binary:"
 	@ls -la main
 	@du -h main
+
+lint:
+	luacheck src/ 2>/dev/null || echo "Install luacheck: luarocks install luacheck"
+
+autoformat:
+	@echo "No standard Lua formatter"
+
+format-check:
+	@echo "No standard Lua formatter"

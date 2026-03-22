@@ -1,7 +1,7 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	wasm-pack build --target web
+	wasm-pack build --release --target web
 
 clean:
 	cargo clean
@@ -21,3 +21,12 @@ e2e: build
 fatbin: build
 	@echo "Fat binary (WASM):"
 	@ls -la pkg/*.wasm
+
+lint:
+	cargo clippy -- -D warnings
+
+autoformat:
+	cargo fmt
+
+format-check:
+	cargo fmt -- --check

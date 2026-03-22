@@ -1,4 +1,4 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
 	@echo "Common Lisp is interpreted/compiled at load time"
@@ -20,3 +20,12 @@ e2e: build
 fatbin:
 	sbcl --noinform --non-interactive --load src/hello.lisp --eval '(sb-ext:save-lisp-and-die "hello" :toplevel (lambda () (format t "~A~%" (hello:greet)) (sb-ext:exit)) :executable t)'
 	@ls -la hello 2>/dev/null
+
+lint:
+	sbcl --noinform --non-interactive --load src/*.lisp --eval '(quit)'
+
+autoformat:
+	@echo "No standard Common Lisp formatter"
+
+format-check:
+	@echo "No standard Common Lisp formatter"

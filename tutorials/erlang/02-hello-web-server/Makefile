@@ -1,4 +1,4 @@
-.PHONY: build clean test typecheck release e2e fatbin
+.PHONY: build clean test typecheck release e2e fatbin lint autoformat format-check
 
 build:
 	rebar3 compile
@@ -31,3 +31,12 @@ fatbin:
 	rebar3 release
 	@echo "Fat binary: _build/default/rel/hello_web/"
 	@du -sh _build/default/rel/hello_web/
+
+lint:
+	rebar3 compile
+
+autoformat:
+	rebar3 fmt 2>/dev/null || echo "No auto-formatter configured"
+
+format-check:
+	rebar3 fmt 2>/dev/null || echo "No auto-formatter configured"

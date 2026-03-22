@@ -1,7 +1,7 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	zig build
+	zig build -Doptimize=ReleaseSafe
 
 clean:
 	rm -rf zig-out zig-cache .zig-cache
@@ -19,3 +19,12 @@ e2e: build
 fatbin:
 	zig build -Doptimize=ReleaseSafe
 	@ls -la zig-out/bin/*
+
+lint:
+	@echo "Zig compiler includes built-in warnings"
+
+autoformat:
+	zig fmt src/
+
+format-check:
+	zig fmt --check src/

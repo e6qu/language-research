@@ -70,6 +70,25 @@ e2e: $(E2E_TARGETS)
 	@echo ""
 	@echo "=== All E2E tests passed ==="
 
+LINT_TARGETS   := $(addprefix lint-,$(LANGUAGES))
+FMT_TARGETS    := $(addprefix autoformat-,$(LANGUAGES))
+FMTCHK_TARGETS := $(addprefix format-check-,$(LANGUAGES))
+
+lint: $(LINT_TARGETS)
+	@echo ""
+	@echo "=== All lint checks done ==="
+
+autoformat: $(FMT_TARGETS)
+	@echo ""
+	@echo "=== All auto-formatting done ==="
+
+format-check: $(FMTCHK_TARGETS)
+	@echo ""
+	@echo "=== All format checks done ==="
+
+consistency:
+	@./test-consistency.sh
+
 clean:
 	@for d in $(ALL_TUTORIALS); do \
 		$(MAKE) -C $$d clean 2>/dev/null || true; \
@@ -398,6 +417,41 @@ typecheck-scheme:
 typecheck-common-lisp:
 	@echo "=== Type-checking Common Lisp tutorials ==="
 	$(call run_target,$(CL_TUTORIALS),typecheck,CommonLisp)
+
+# ─── Lint / Format targets (generic — delegates to child Makefiles) ────
+
+# Map language name to tutorials variable
+tutorials_for = $(if $(filter elixir,$1),$(ELIXIR_TUTORIALS),\
+  $(if $(filter erlang,$1),$(ERLANG_TUTORIALS),\
+  $(if $(filter elm,$1),$(ELM_TUTORIALS),\
+  $(if $(filter lua,$1),$(LUA_TUTORIALS),\
+  $(if $(filter tcl,$1),$(TCL_TUTORIALS),\
+  $(if $(filter perl,$1),$(PERL_TUTORIALS),\
+  $(if $(filter raku,$1),$(RAKU_TUTORIALS),\
+  $(if $(filter rust,$1),$(RUST_TUTORIALS),\
+  $(if $(filter rust-wasm,$1),$(RUST_WASM_TUTORIALS),\
+  $(if $(filter golang,$1),$(GOLANG_TUTORIALS),\
+  $(if $(filter java,$1),$(JAVA_TUTORIALS),\
+  $(if $(filter java-springboot,$1),$(SPRINGBOOT_TUTORIALS),\
+  $(if $(filter java-quarkus,$1),$(QUARKUS_TUTORIALS),\
+  $(if $(filter clojure,$1),$(CLOJURE_TUTORIALS),\
+  $(if $(filter zig,$1),$(ZIG_TUTORIALS),\
+  $(if $(filter dlang,$1),$(DLANG_TUTORIALS),\
+  $(if $(filter c3,$1),$(C3_TUTORIALS),\
+  $(if $(filter scheme,$1),$(SCHEME_TUTORIALS),\
+  $(if $(filter common-lisp,$1),$(CL_TUTORIALS),)))))))))))))))))))
+
+lint-%:
+	@echo "=== Linting $* tutorials ==="
+	$(call run_target,$(call tutorials_for,$*),lint,$*)
+
+autoformat-%:
+	@echo "=== Formatting $* tutorials ==="
+	$(call run_target,$(call tutorials_for,$*),autoformat,$*)
+
+format-check-%:
+	@echo "=== Format-checking $* tutorials ==="
+	$(call run_target,$(call tutorials_for,$*),format-check,$*)
 
 # ─── Binary artifact targets ──────────────────────────────────
 

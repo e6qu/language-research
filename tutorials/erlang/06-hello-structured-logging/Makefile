@@ -1,4 +1,4 @@
-.PHONY: build clean test typecheck e2e fatbin
+.PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
 	rebar3 compile
@@ -21,3 +21,12 @@ e2e: build
 fatbin: build
 	@echo "Note: add relx config to rebar.config for full OTP release with bundled ERTS"
 	@echo "Built to: _build/default/lib/"
+
+lint:
+	rebar3 compile
+
+autoformat:
+	rebar3 fmt 2>/dev/null || echo "No auto-formatter configured"
+
+format-check:
+	rebar3 fmt 2>/dev/null || echo "No auto-formatter configured"

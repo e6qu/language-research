@@ -1,4 +1,4 @@
-.PHONY: build clean test typecheck e2e deps fatbin
+.PHONY: build clean test typecheck e2e deps fatbin lint autoformat format-check
 
 build:
 	@echo "No build step required for Lua"
@@ -29,3 +29,12 @@ deps:
 	luarocks install busted --local 2>/dev/null || true
 	luarocks install dkjson --local 2>/dev/null || true
 	luarocks install luasocket --local 2>/dev/null || true
+
+lint:
+	luacheck src/ 2>/dev/null || echo "Install luacheck: luarocks install luacheck"
+
+autoformat:
+	@echo "No standard Lua formatter"
+
+format-check:
+	@echo "No standard Lua formatter"

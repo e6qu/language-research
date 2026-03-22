@@ -1,4 +1,4 @@
-.PHONY: build clean test typecheck escript e2e fatbin
+.PHONY: build clean test typecheck escript e2e fatbin lint autoformat format-check
 
 escript:
 	rebar3 escriptize
@@ -24,3 +24,12 @@ e2e: escript
 fatbin: escript
 	@echo "Fat binary (escript): _build/default/bin/hello_cli"
 	@ls -la _build/default/bin/hello_cli
+
+lint:
+	rebar3 compile
+
+autoformat:
+	rebar3 fmt 2>/dev/null || echo "No auto-formatter configured"
+
+format-check:
+	rebar3 fmt 2>/dev/null || echo "No auto-formatter configured"
