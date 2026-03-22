@@ -104,8 +104,8 @@ test_03() {
     local out=$(cd elixir/03-hello-cli && mix run -e 'HelloCli.main(["--name", "Test", "--shout"])' 2>/dev/null | tr -d '\n')
     check "03" "elixir" "$expected" "$out"
 
-    # Erlang (filter rebar3 build output)
-    out=$(cd erlang/03-hello-cli && rebar3 escriptize > /dev/null 2>&1 && _build/default/bin/hello_cli --name Test --shout 2>/dev/null | tr -d '\n')
+    # Erlang (escript must be pre-built via make build)
+    out=$(cd erlang/03-hello-cli && _build/default/bin/hello_cli --name Test --shout 2>/dev/null | tr -d '\n')
     check "03" "erlang" "$expected" "$out"
 
     # Lua
