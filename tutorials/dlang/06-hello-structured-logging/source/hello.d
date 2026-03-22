@@ -35,14 +35,14 @@ LogEntry makeEntry(LogLevel level, string message, string component, string[stri
 }
 
 string toJson(LogEntry entry) {
-    JSONValue j = JSONValue.emptyObject;
+    JSONValue j = parseJSON("{}");
     j["level"] = logLevelString(entry.level);
     j["message"] = entry.message;
     j["component"] = entry.component;
     j["timestamp"] = entry.timestamp;
 
     if (entry.extra !is null && entry.extra.length > 0) {
-        JSONValue extras = JSONValue.emptyObject;
+        JSONValue extras = parseJSON("{}");
         foreach (k, v; entry.extra) {
             extras[k] = v;
         }

@@ -1,3 +1,5 @@
+(require :sb-bsd-sockets)
+
 (defpackage :hello-health
   (:use :cl)
   (:export #:make-health-checker #:check-liveness #:check-readiness #:check-health

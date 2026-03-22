@@ -72,7 +72,7 @@ HttpResponse handleRequest(HttpRequest req, AppState state) {
     }
 
     if (req.path == "/healthz") {
-        JSONValue j = JSONValue.emptyObject;
+        JSONValue j = parseJSON("{}");
         j["alive"] = state.alive;
         j["ready"] = state.ready;
         j["version"] = state.version_;

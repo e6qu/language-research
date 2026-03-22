@@ -1,7 +1,7 @@
 .PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	mvn -q package -DskipTests
+	mvn -q compile
 
 clean:
 	mvn -q clean
@@ -12,7 +12,7 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: build
+e2e: fatbin
 	java -jar target/*.jar --name=Test --shout | grep -q "HELLO, TEST!"
 	@echo "E2E: PASS"
 

@@ -1,7 +1,7 @@
 .PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	mvn -q package -DskipTests
+	mvn -q compile
 
 clean:
 	mvn -q clean

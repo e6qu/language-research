@@ -32,7 +32,7 @@ struct OpenApiSpec {
 }
 
 JSONValue propertyToJson(SchemaProperty p) {
-    JSONValue j = JSONValue.emptyObject;
+    JSONValue j = parseJSON("{}");
     j["type"] = p.type;
     if (p.description.length > 0) {
         j["description"] = p.description;
@@ -41,9 +41,9 @@ JSONValue propertyToJson(SchemaProperty p) {
 }
 
 JSONValue schemaToJson(Schema s) {
-    JSONValue j = JSONValue.emptyObject;
+    JSONValue j = parseJSON("{}");
     j["type"] = "object";
-    JSONValue props = JSONValue.emptyObject;
+    JSONValue props = parseJSON("{}");
     JSONValue[] req;
 
     foreach (p; s.properties) {
@@ -60,33 +60,33 @@ JSONValue schemaToJson(Schema s) {
 }
 
 JSONValue specToJson(OpenApiSpec spec) {
-    JSONValue root = JSONValue.emptyObject;
+    JSONValue root = parseJSON("{}");
     root["openapi"] = "3.0.0";
 
-    JSONValue info = JSONValue.emptyObject;
+    JSONValue info = parseJSON("{}");
     info["title"] = spec.title;
     info["version"] = spec.ver;
     info["description"] = spec.description;
     root["info"] = info;
 
-    JSONValue paths = JSONValue.emptyObject;
+    JSONValue paths = parseJSON("{}");
     foreach (ep; spec.endpoints) {
         if (ep.path !in paths) {
-            paths[ep.path] = JSONValue.emptyObject;
+            paths[ep.path] = parseJSON("{}");
         }
 
-        JSONValue op = JSONValue.emptyObject;
+        JSONValue op = parseJSON("{}");
         op["summary"] = ep.summary;
 
-        JSONValue resp = JSONValue.emptyObject;
+        JSONValue resp = parseJSON("{}");
         import std.conv : to;
-        JSONValue respDetail = JSONValue.emptyObject;
+        JSONValue respDetail = parseJSON("{}");
         respDetail["description"] = ep.summary;
 
         if (ep.responseSchema.length > 0) {
-            JSONValue content = JSONValue.emptyObject;
-            JSONValue mediaType = JSONValue.emptyObject;
-            JSONValue schemaRef = JSONValue.emptyObject;
+            JSONValue content = parseJSON("{}");
+            JSONValue mediaType = parseJSON("{}");
+            JSONValue schemaRef = parseJSON("{}");
             schemaRef["$ref"] = "#/components/schemas/" ~ ep.responseSchema;
             mediaType["schema"] = schemaRef;
             content["application/json"] = mediaType;
@@ -100,8 +100,8 @@ JSONValue specToJson(OpenApiSpec spec) {
     root["paths"] = paths;
 
     if (spec.schemas.length > 0) {
-        JSONValue components = JSONValue.emptyObject;
-        JSONValue schemasJson = JSONValue.emptyObject;
+        JSONValue components = parseJSON("{}");
+        JSONValue schemasJson = parseJSON("{}");
         foreach (s; spec.schemas) {
             schemasJson[s.name] = schemaToJson(s);
         }

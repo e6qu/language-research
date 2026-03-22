@@ -1,7 +1,7 @@
 .PHONY: build clean test typecheck e2e fatbin lint autoformat format-check
 
 build:
-	mvn -q package -DskipTests
+	mvn -q compile
 
 clean:
 	mvn -q clean
@@ -12,7 +12,7 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: build
+e2e: fatbin
 	@lsof -ti:4080 | xargs kill 2>/dev/null || true
 	java -jar target/*.jar &
 	@sleep 5
