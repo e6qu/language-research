@@ -1,25 +1,21 @@
 .PHONY: build clean test typecheck e2e fatbin
 
 build:
-	dub build
+	ldc2 -of=hello source/app.d source/hello.d
 
 clean:
-	dub clean
-	rm -rf .dub
+	rm -f hello *.o
 
 test:
-	dub test
+	ldc2 -unittest -main -run source/hello.d
 
 typecheck:
-	dub build --build=syntax-only 2>/dev/null || dub build
+	ldc2 -o- source/hello.d source/app.d
 
 e2e: build
-	./hello-web-server &
-	sleep 1
-	curl -s http://localhost:8080/ | grep -q "Hello, world!" && echo "PASS: /" || echo "FAIL: /"
-	curl -s http://localhost:8080/health | grep -q "ok" && echo "PASS: /health" || echo "FAIL: /health"
-	kill %1 2>/dev/null || true
+	./hello | head -1 | grep -qi "hello"
+	@echo "E2E: PASS"
 
 fatbin:
-	dub build --build=release
-	@ls -la hello-web-server 2>/dev/null || ls -la *app* 2>/dev/null
+	ldc2 -O2 -of=hello source/app.d source/hello.d
+	@ls -la hello

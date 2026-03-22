@@ -1,4 +1,5 @@
-(use-modules (srfi srfi-64)
+(use-modules (srfi srfi-11)
+             (srfi srfi-64)
              (web request)
              (web uri))
 

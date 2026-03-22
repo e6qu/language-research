@@ -1,5 +1,6 @@
 .{
-    .name = "hello-tui",
+    .fingerprint = 0x174b1bd62b14be65,
+    .name = .hello_tui,
     .version = "0.1.0",
     .paths = .{
         "build.zig",

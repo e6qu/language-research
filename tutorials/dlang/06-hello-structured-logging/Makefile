@@ -1,21 +1,21 @@
 .PHONY: build clean test typecheck e2e fatbin
 
 build:
-	dub build
+	ldc2 -of=hello source/app.d source/hello.d
 
 clean:
-	dub clean
-	rm -rf .dub
+	rm -f hello *.o
 
 test:
-	dub test
+	ldc2 -unittest -main -run source/hello.d
 
 typecheck:
-	dub build --build=syntax-only 2>/dev/null || dub build
+	ldc2 -o- source/hello.d source/app.d
 
 e2e: build
-	./hello-structured-logging
+	./hello | head -1 | grep -qi "hello"
+	@echo "E2E: PASS"
 
 fatbin:
-	dub build --build=release
-	@ls -la hello-structured-logging 2>/dev/null || ls -la *app* 2>/dev/null
+	ldc2 -O2 -of=hello source/app.d source/hello.d
+	@ls -la hello

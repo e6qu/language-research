@@ -22,7 +22,7 @@ pub fn parseArgs(allocator: std.mem.Allocator, args: []const []const u8) !CliArg
 
 pub fn formatGreeting(allocator: std.mem.Allocator, cli: CliArgs) ![]u8 {
     const name = if (cli.name.len > 0) cli.name else "world";
-    var msg = try std.fmt.allocPrint(allocator, "Hello, {s}!", .{name});
+    const msg = try std.fmt.allocPrint(allocator, "Hello, {s}!", .{name});
 
     if (cli.shout) {
         for (msg) |*c| {

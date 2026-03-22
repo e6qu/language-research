@@ -1,5 +1,6 @@
 .{
-    .name = "hello-cli",
+    .fingerprint = 0x9522073bbfe8baba,
+    .name = .hello_cli,
     .version = "0.1.0",
     .paths = .{
         "build.zig",

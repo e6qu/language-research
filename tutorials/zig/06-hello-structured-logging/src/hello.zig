@@ -31,7 +31,17 @@ pub fn buildLogJson(allocator: std.mem.Allocator, level: Level, message: []const
         .timestamp = "2026-03-22T00:00:00Z",
     };
 
-    return try std.json.stringifyAlloc(allocator, entry, .{});
+    const level_str = switch (level) {
+        .debug => "debug",
+        .info => "info",
+        .warn => "warn",
+        .@"error" => "error",
+    };
+    return try std.fmt.allocPrint(
+        allocator,
+        "{{\"level\":\"{s}\",\"message\":\"{s}\",\"service\":\"{s}\",\"timestamp\":\"{s}\"}}",
+        .{ level_str, message, service, entry.timestamp },
+    );
 }
 
 pub fn writeLog(writer: anytype, allocator: std.mem.Allocator, level: Level, message: []const u8, service: []const u8) !void {

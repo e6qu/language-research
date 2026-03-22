@@ -1,5 +1,6 @@
 .{
-    .name = "hello-web-server",
+    .fingerprint = 0xfa2c15080080cac9,
+    .name = .hello_web_server,
     .version = "0.1.0",
     .paths = .{
         "build.zig",

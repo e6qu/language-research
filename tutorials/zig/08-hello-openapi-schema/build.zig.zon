@@ -1,5 +1,6 @@
 .{
-    .name = "hello-openapi-schema",
+    .fingerprint = 0x9764666a8cf55bf9,
+    .name = .hello_openapi_schema,
     .version = "0.1.0",
     .paths = .{
         "build.zig",

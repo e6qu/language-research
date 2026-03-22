@@ -1,5 +1,6 @@
 .{
-    .name = "hello-concurrency",
+    .fingerprint = 0xa882230ddba3ba08,
+    .name = .hello_concurrency,
     .version = "0.1.0",
     .paths = .{
         "build.zig",

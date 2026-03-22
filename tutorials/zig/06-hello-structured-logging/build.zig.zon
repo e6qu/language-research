@@ -1,5 +1,6 @@
 .{
-    .name = "hello-structured-logging",
+    .fingerprint = 0xac3ebc014bfdd1d5,
+    .name = .hello_structured_logging,
     .version = "0.1.0",
     .paths = .{
         "build.zig",

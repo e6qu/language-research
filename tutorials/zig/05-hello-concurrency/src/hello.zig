@@ -9,7 +9,7 @@ pub const FetchResult = struct {
 pub fn simulateFetch(url: []const u8, id: usize) FetchResult {
     // Simulate network latency based on URL length
     const delay_ns: u64 = @as(u64, url.len) * 10 * std.time.ns_per_ms;
-    std.time.sleep(delay_ns);
+    std.Thread.sleep(delay_ns);
 
     return FetchResult{
         .url = url,
