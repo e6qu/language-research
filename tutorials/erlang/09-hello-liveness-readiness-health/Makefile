@@ -14,8 +14,13 @@ typecheck:
 	rebar3 dialyzer
 
 e2e: build
-	@echo "E2E: testing health checker..."
-	erl -pa _build/default/lib/*/ebin -noshell -eval '{ok,P} = health_checker:start_link(), ok = health_checker:status(), health_checker:set_dependency(database, error), degraded = health_checker:status(), io:format("ok~n"), halt().' | grep -q "ok"
+	@lsof -ti:8083 | xargs kill 2>/dev/null || true
+	@echo "E2E: testing health server..."
+	@erl -pa _build/default/lib/*/ebin -noshell -eval \
+		'application:ensure_all_started(hello_health), receive after infinity -> ok end.' &
+	@sleep 3
+	curl -sf http://localhost:8083/healthz | grep -q "status"
+	@pkill -f "beam.*hello_health" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin: build

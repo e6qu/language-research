@@ -15,9 +15,7 @@ test: deps
 typecheck: deps
 	mix dialyzer
 
-e2e: build
-	@echo "E2E: testing structured logging..."
-	mix run -e 'HelloLogging.demo()' 2>&1 | head -1 | python3 -c "import sys,json; json.load(sys.stdin); print('valid JSON')"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin: deps

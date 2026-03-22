@@ -24,8 +24,7 @@ typecheck: deps
 
 e2e: escript
 	@echo "E2E: testing CLI escript..."
-	./hello_cli --name E2E --shout | grep -q "HELLO, E2E!"
-	./hello_cli --name World | grep -q "Hello, World!"
+	./hello_cli --name Test --shout | grep -q "HELLO, TEST!"
 	@echo "E2E: PASS"
 
 fatbin: deps

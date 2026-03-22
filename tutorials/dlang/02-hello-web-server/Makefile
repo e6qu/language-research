@@ -14,11 +14,11 @@ typecheck:
 
 e2e: build
 	@lsof -ti:4120 | xargs kill 2>/dev/null || true
-	@sleep 1
 	./hello &
-	@sleep 1
-	curl -s http://localhost:4120/ | grep -qi "hello"
-	@kill %1 2>/dev/null || true
+	@sleep 2
+	curl -sf http://localhost:4120/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4120/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "./hello" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

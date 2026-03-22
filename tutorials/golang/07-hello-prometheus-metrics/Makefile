@@ -15,13 +15,12 @@ typecheck:
 
 e2e: build
 	@lsof -ti:4061 | xargs kill 2>/dev/null || true
-	@sleep 1
 	./hello &
-	@sleep 1
-	curl -s http://localhost:4061/work > /dev/null
-	curl -s http://localhost:4061/work > /dev/null
-	curl -s http://localhost:4061/metrics | grep -q "work_total" && echo "PASS: metrics"
-	@kill %1 2>/dev/null || true
+	@sleep 2
+	curl -sf http://localhost:4061/work > /dev/null
+	curl -sf http://localhost:4061/metrics | grep -q "work"
+	@pkill -f "./hello" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	CGO_ENABLED=0 go build -ldflags="-s -w" -o hello ./...

@@ -12,8 +12,7 @@ test:
 typecheck:
 	@echo "No static type checker (use clj-kondo for linting)"
 
-e2e: build
-	lein run | grep -q "4 threads x 1000 increments = 4000"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin:

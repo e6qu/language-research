@@ -13,12 +13,13 @@ typecheck:
 	@echo "No static type checker configured (install teal for type checking)"
 
 e2e: build
+	@lsof -ti:4010 | xargs kill 2>/dev/null || true
 	lua src/server.lua 4010 &
-	sleep 1
-	curl -sf http://localhost:4010/ | grep -q "Hello, world"
-	curl -sf http://localhost:4010/greet/E2E | grep -q "Hello, E2E"
-	kill %1 2>/dev/null || true
-	@echo "e2e passed"
+	@sleep 2
+	curl -sf http://localhost:4010/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4010/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "lua.*server" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 LUA_STATIC_LIB = /opt/homebrew/lib/liblua.a
 LUA_INCLUDE = /opt/homebrew/include/lua

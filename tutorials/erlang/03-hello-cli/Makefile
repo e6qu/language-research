@@ -18,7 +18,7 @@ typecheck:
 
 e2e: escript
 	@echo "E2E: testing CLI escript..."
-	_build/default/bin/hello_cli --name E2E --shout | grep -q "HELLO, E2E!"
+	_build/default/bin/hello_cli --name Test --shout | grep -q "HELLO, TEST!"
 	@echo "E2E: PASS"
 
 fatbin: escript

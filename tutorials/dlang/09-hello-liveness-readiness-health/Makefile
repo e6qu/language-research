@@ -14,6 +14,7 @@ typecheck:
 
 e2e: test
 	@echo "E2E: PASS"
+
 fatbin:
 	ldc2 -O2 -of=hello source/app.d source/hello.d
 	@ls -la hello

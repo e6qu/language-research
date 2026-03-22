@@ -13,16 +13,13 @@ typecheck:
 	@echo "No static type checker configured (install nagelfar for checking)"
 
 e2e: build
-	@PORT=$$(( 9000 + $$RANDOM % 1000 )); \
-	tclsh src/server.tcl $$PORT & \
-	SERVER_PID=$$!; \
-	sleep 1; \
-	RESULT=$$(curl -s http://localhost:$$PORT/); \
-	GREET=$$(curl -s http://localhost:$$PORT/greet/E2E); \
-	kill $$SERVER_PID 2>/dev/null || true; \
-	echo "$$RESULT" | grep -q '"Hello, world!"' && \
-	echo "$$GREET" | grep -q '"Hello, E2E!"' && \
-	echo "e2e passed"
+	@lsof -ti:4020 | xargs kill 2>/dev/null || true
+	tclsh src/server.tcl 4020 &
+	@sleep 2
+	curl -sf http://localhost:4020/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4020/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "tclsh.*server" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	cat src/*.tcl > hello_bundle.tcl

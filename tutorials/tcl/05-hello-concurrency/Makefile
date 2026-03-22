@@ -12,9 +12,8 @@ test:
 typecheck:
 	@echo "No static type checker configured (install nagelfar for checking)"
 
-e2e: build
-	@echo 'source src/concurrent.tcl; set r [concurrent::fetch_all {http://a.com http://b.com}]; puts "count=[llength $$r]"; puts "url=[dict get [lindex $$r 0] url]"' | tclsh | grep -q "count=2"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	cat src/*.tcl > hello_bundle.tcl

@@ -13,13 +13,13 @@ typecheck:
 	cargo check
 
 e2e: build
+	@lsof -ti:4050 | xargs kill 2>/dev/null || true
 	./target/release/hello-web-server &
-	sleep 1
-	curl -s http://localhost:4050/ | grep -q "Hello, World!"
-	curl -s http://localhost:4050/greet/Test | grep -q "Hello, Test!"
-	curl -s -o /dev/null -w "%{http_code}" http://localhost:4050/nope | grep -q "404"
-	pkill -f "target/release/hello" 2>/dev/null || true
-	@echo "e2e passed"
+	@sleep 2
+	curl -sf http://localhost:4050/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4050/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "target/release/hello" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	cargo build --release

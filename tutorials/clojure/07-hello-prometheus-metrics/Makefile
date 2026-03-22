@@ -13,10 +13,12 @@ typecheck:
 	@echo "No static type checker (use clj-kondo for linting)"
 
 e2e: build
+	@lsof -ti:4101 | xargs kill 2>/dev/null || true
 	@echo "Starting server on port 4101..."
 	@lein run 4101 &
 	@sleep 10
-	@curl -sf http://localhost:4101/metrics | grep -q "metrics_scrapes_total" && echo "GET /metrics OK"
+	curl -sf http://localhost:4101/work > /dev/null
+	curl -sf http://localhost:4101/metrics | grep -q "work"
 	@pkill -f "hello-metrics.*4101" 2>/dev/null || true
 	@echo "E2E: PASS"
 

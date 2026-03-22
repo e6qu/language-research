@@ -13,7 +13,7 @@ typecheck:
 	ldc2 -o- source/hello.d source/app.d
 
 e2e: build
-	./hello | head -1 | grep -qi "hello"
+	./hello World | grep -q "Hello, World!"
 	@echo "E2E: PASS"
 
 fatbin:

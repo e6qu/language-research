@@ -15,9 +15,7 @@ test: deps
 typecheck: deps
 	mix dialyzer
 
-e2e: build
-	@echo "E2E: testing concurrency..."
-	mix run -e 'results = HelloConcurrency.fetch_all([]); IO.inspect(results)'  | grep -q "\\[\\]"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin: deps

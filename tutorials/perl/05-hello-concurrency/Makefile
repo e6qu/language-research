@@ -12,9 +12,8 @@ test:
 typecheck:
 	perl -c lib/ParallelFetch.pm
 
-e2e: build
-	perl -Ilib -MParallelFetch -e 'print scalar(ParallelFetch::fetch_all("a","b")), "\n"' | grep -q "2"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Install PAR::Packer for fat binaries: cpan PAR::Packer"

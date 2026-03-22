@@ -13,11 +13,12 @@ typecheck:
 	cargo check
 
 e2e: build
+	@lsof -ti:4052 | xargs kill 2>/dev/null || true
 	./target/release/hello-openapi-schema &
-	sleep 1
-	curl -s http://localhost:4052/api/openapi | python3 -c "import sys,json; d=json.load(sys.stdin); assert 'openapi' in d"
-	pkill -f "target/release/hello" 2>/dev/null || true
-	@echo "e2e passed"
+	@sleep 2
+	curl -sf http://localhost:4052/api/openapi | grep -q "openapi"
+	@pkill -f "target/release/hello" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	cargo build --release

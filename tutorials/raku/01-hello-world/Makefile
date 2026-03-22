@@ -13,8 +13,8 @@ typecheck:
 	raku -c lib/Hello.rakumod
 
 e2e: build
-	raku -Ilib -MHello -e 'say greet("E2E")' | grep -q "Hello, E2E!"
-	@echo "e2e passed"
+	raku -Ilib -MHello -e 'say greet("World")' | grep -q "Hello, World!"
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Raku does not have a mature fat binary tool"

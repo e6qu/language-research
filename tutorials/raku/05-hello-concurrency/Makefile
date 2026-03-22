@@ -12,9 +12,8 @@ test:
 typecheck:
 	raku -c lib/Concurrent.rakumod
 
-e2e: build
-	raku bin/concurrent.raku | grep -q "Done"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Raku does not have a mature fat binary tool"

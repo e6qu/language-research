@@ -12,12 +12,12 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: fatbin
-	PATH="/opt/homebrew/opt/openjdk/bin:$$PATH" java -jar target/quarkus-app/quarkus-run.jar &
-	sleep 8
-	curl -sf http://localhost:4092/ | grep -q "Hello"
+e2e: build
+	@lsof -ti:4092 | xargs kill 2>/dev/null || true
+	java -jar target/quarkus-app/quarkus-run.jar &
+	@sleep 8
 	curl -sf http://localhost:4092/q/openapi | grep -q "openapi"
-	kill %1 2>/dev/null || true
+	@pkill -f "quarkus-run" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

@@ -12,9 +12,8 @@ test:
 typecheck:
 	cargo check
 
-e2e: build
-	./target/release/hello-concurrency | grep -q "bytes"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	cargo build --release

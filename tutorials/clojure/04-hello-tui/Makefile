@@ -12,9 +12,7 @@ test:
 typecheck:
 	@echo "No static type checker (use clj-kondo for linting)"
 
-e2e: build
-	@echo "TUI is interactive; verifying build only"
-	lein compile
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin:

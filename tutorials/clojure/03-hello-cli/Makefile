@@ -13,7 +13,7 @@ typecheck:
 	@echo "No static type checker (use clj-kondo for linting)"
 
 e2e: build
-	lein run -- --name E2E --shout | grep -q "HELLO, E2E!"
+	lein run -- --name Test --shout | grep -q "HELLO, TEST!"
 	@echo "E2E: PASS"
 
 fatbin:

@@ -14,8 +14,14 @@ typecheck:
 	rebar3 dialyzer
 
 e2e: build
-	@echo "E2E: testing metrics..."
-	erl -pa _build/default/lib/*/ebin -noshell -eval 'application:ensure_all_started(prometheus), prometheus_counter:new([{name,test_e2e},{help,"e2e"}]), prometheus_counter:inc(test_e2e), V = prometheus_counter:value(test_e2e), io:format("~p~n",[V]), halt().' | grep -q "1"
+	@lsof -ti:8081 | xargs kill 2>/dev/null || true
+	@echo "E2E: testing metrics server..."
+	@erl -pa _build/default/lib/*/ebin -noshell -eval \
+		'application:ensure_all_started(hello_metrics), receive after infinity -> ok end.' &
+	@sleep 3
+	curl -sf http://localhost:8081/work > /dev/null
+	curl -sf http://localhost:8081/metrics | grep -q "work"
+	@pkill -f "beam.*hello_metrics" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin: build

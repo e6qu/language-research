@@ -13,12 +13,13 @@ typecheck:
 	perl -c lib/Server.pm
 
 e2e: build
+	@lsof -ti:4030 | xargs kill 2>/dev/null || true
 	perl -Ilib -MServer -e 'Server::start(4030)' &
-	sleep 1
-	curl -s http://localhost:4030/ | grep -q "Hello, world!"
-	curl -s http://localhost:4030/greet/E2E | grep -q "Hello, E2E!"
-	kill %1 2>/dev/null || true
-	@echo "e2e passed"
+	@sleep 2
+	curl -sf http://localhost:4030/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4030/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "perl.*Server" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Install PAR::Packer for fat binaries: cpan PAR::Packer"

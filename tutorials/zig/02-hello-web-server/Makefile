@@ -13,12 +13,13 @@ typecheck:
 	zig build test -Doptimize=Debug 2>&1 | head -1 || true
 
 e2e: build
+	@lsof -ti:4110 | xargs kill 2>/dev/null || true
 	./zig-out/bin/hello_web_server &
-	sleep 1
-	curl -s http://127.0.0.1:4110/ | python3 -m json.tool
-	curl -s http://127.0.0.1:4110/greet/Zig | python3 -m json.tool
-	curl -s http://127.0.0.1:4110/unknown | python3 -m json.tool
-	kill %1 || true
+	@sleep 2
+	curl -sf http://localhost:4110/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4110/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "hello_web_server" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	zig build -Doptimize=ReleaseSafe

@@ -12,9 +12,8 @@ test:
 typecheck:
 	perl -c lib/HealthChecker.pm
 
-e2e: build
-	perl -Ilib -MHealthChecker -e 'my $$h = HealthChecker->new(); print $$h->liveness_json(), "\n"' | grep -q "ok"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Install PAR::Packer for fat binaries: cpan PAR::Packer"

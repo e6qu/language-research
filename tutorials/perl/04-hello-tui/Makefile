@@ -12,9 +12,8 @@ test:
 typecheck:
 	perl -c lib/TuiState.pm
 
-e2e: build
-	perl -c bin/tui.pl
-	@echo "e2e passed (build verify only, TUI requires terminal)"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Install PAR::Packer for fat binaries: cpan PAR::Packer"

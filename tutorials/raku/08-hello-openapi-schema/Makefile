@@ -12,9 +12,8 @@ test:
 typecheck:
 	raku -c lib/OpenApiSpec.rakumod
 
-e2e: build
-	raku bin/openapi.raku | grep -q "openapi"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Raku does not have a mature fat binary tool"

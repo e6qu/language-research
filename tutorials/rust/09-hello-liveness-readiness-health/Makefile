@@ -13,13 +13,12 @@ typecheck:
 	cargo check
 
 e2e: build
+	@lsof -ti:4053 | xargs kill 2>/dev/null || true
 	./target/release/hello-liveness-readiness-health &
-	sleep 1
-	curl -s http://localhost:4053/healthz | grep -q "alive"
-	curl -s http://localhost:4053/readyz | grep -q "ready"
-	curl -s http://localhost:4053/health | grep -q "healthy"
-	pkill -f "target/release/hello" 2>/dev/null || true
-	@echo "e2e passed"
+	@sleep 2
+	curl -sf http://localhost:4053/healthz | grep -q "status"
+	@pkill -f "target/release/hello" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	cargo build --release

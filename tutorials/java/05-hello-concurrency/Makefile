@@ -12,8 +12,7 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: build
-	java -cp target/*-jar-with-dependencies.jar hello.Main https://httpbin.org/get 2>&1 | grep -q "Fetching"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin:

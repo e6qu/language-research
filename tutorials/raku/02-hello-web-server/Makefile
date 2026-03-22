@@ -15,11 +15,13 @@ typecheck:
 	raku -c lib/Server.rakumod
 
 e2e: build
+	@lsof -ti:$(PORT) | xargs kill 2>/dev/null || true
 	raku bin/server.raku $(PORT) &
-	sleep 1
-	curl -s http://localhost:$(PORT)/ | grep -q "Hello, world!" && echo "e2e root passed"
-	curl -s http://localhost:$(PORT)/greet/E2E | grep -q "Hello, E2E!" && echo "e2e greet passed"
-	kill %1 2>/dev/null || true
+	@sleep 2
+	curl -sf http://localhost:$(PORT)/ | grep -q "Hello, world!"
+	curl -sf http://localhost:$(PORT)/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "raku.*server" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Raku does not have a mature fat binary tool"

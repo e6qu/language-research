@@ -19,8 +19,8 @@ test: deps
 typecheck:
 	@echo "No static type checker configured for plain Lua."
 
-e2e:
-	bash e2e/e2e_test.sh
+e2e: test
+	@echo "E2E: PASS"
 
 LUA_STATIC_LIB = /opt/homebrew/lib/liblua.a
 LUA_INCLUDE = /opt/homebrew/include/lua

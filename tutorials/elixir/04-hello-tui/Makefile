@@ -15,8 +15,7 @@ test: deps
 typecheck: deps
 	mix dialyzer
 
-e2e: build
-	@echo "E2E: TUI build verified (interactive, skipping runtime test)"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin: deps

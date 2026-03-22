@@ -12,11 +12,13 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: fatbin
+e2e: build
+	@lsof -ti:4080 | xargs kill 2>/dev/null || true
 	java -jar target/*.jar &
-	sleep 5
-	curl -sf http://localhost:4080/ | grep -q "Hello"
-	kill %1 2>/dev/null || true
+	@sleep 5
+	curl -sf http://localhost:4080/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4080/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "target/.*jar" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

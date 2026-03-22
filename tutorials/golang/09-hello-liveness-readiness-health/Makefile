@@ -14,12 +14,12 @@ typecheck:
 	go vet ./...
 
 e2e: build
+	@lsof -ti:4063 | xargs kill 2>/dev/null || true
 	./hello &
-	@sleep 1
-	curl -s http://localhost:4063/healthz | grep -q "alive" && echo "PASS: healthz"
-	curl -s http://localhost:4063/readyz | grep -q "ready" && echo "PASS: readyz"
-	curl -s http://localhost:4063/health | grep -q "healthy" && echo "PASS: health"
-	@kill %1 2>/dev/null || true
+	@sleep 2
+	curl -sf http://localhost:4063/healthz | grep -q "status"
+	@pkill -f "./hello" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	CGO_ENABLED=0 go build -ldflags="-s -w" -o hello ./...

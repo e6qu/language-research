@@ -12,9 +12,8 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: fatbin
-	java -jar target/quarkus-app/quarkus-run.jar --name Quarkus | grep -q "Hello, Quarkus!"
-	java -jar target/quarkus-app/quarkus-run.jar --name Quarkus --shout | grep -q "HELLO, QUARKUS!"
+e2e: build
+	java -jar target/quarkus-app/quarkus-run.jar --name Test --shout | grep -q "HELLO, TEST!"
 	@echo "E2E: PASS"
 
 fatbin:

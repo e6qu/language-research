@@ -18,7 +18,7 @@ typecheck: deps
 e2e: build
 	@echo "E2E: testing via mix release..."
 	MIX_ENV=prod mix release --overwrite --quiet
-	_build/prod/rel/hello/bin/hello eval 'IO.puts(Hello.greet("E2E"))'  | grep -q "Hello, E2E!"
+	_build/prod/rel/hello/bin/hello eval 'IO.puts(Hello.greet("World"))' | grep -q "Hello, World!"
 	@echo "E2E: PASS"
 
 fatbin: deps

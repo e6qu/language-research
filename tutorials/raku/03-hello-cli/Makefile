@@ -13,8 +13,8 @@ typecheck:
 	raku -c lib/HelloCli.rakumod
 
 e2e: build
-	raku bin/hello-cli.raku --name E2E --shout | grep -q "HELLO, E2E!"
-	@echo "e2e passed"
+	raku bin/hello-cli.raku --name Test --shout | grep -q "HELLO, TEST!"
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Raku does not have a mature fat binary tool"

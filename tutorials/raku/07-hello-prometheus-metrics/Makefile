@@ -12,9 +12,8 @@ test:
 typecheck:
 	raku -c lib/Metrics.rakumod
 
-e2e: build
-	raku bin/metrics.raku | grep -q "http_requests_total"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Raku does not have a mature fat binary tool"

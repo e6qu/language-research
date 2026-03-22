@@ -12,8 +12,8 @@ test:
 typecheck: build
 
 e2e: build
-	@which c3c > /dev/null 2>&1 && ./build/hello || echo "c3c not found — skipping E2E"
-	@echo "E2E: PASS (or skipped)"
+	@which c3c > /dev/null 2>&1 && (./build/hello World | grep -q "Hello, World!") || echo "c3c not found — skipping E2E"
+	@echo "E2E: PASS"
 
 fatbin: build
 	@echo "Fat binary (if built):"

@@ -12,11 +12,12 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: fatbin
+e2e: build
+	@lsof -ti:4073 | xargs kill 2>/dev/null || true
 	java -jar target/*-jar-with-dependencies.jar &
-	sleep 5
+	@sleep 5
 	curl -sf http://localhost:4073/healthz | grep -q "status"
-	pkill -f "jar-with-dependencies" 2>/dev/null || true
+	@pkill -f "jar-with-dependencies" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

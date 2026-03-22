@@ -13,8 +13,8 @@ typecheck:
 	perl -c lib/HelloCli.pm
 
 e2e: build
-	perl -Ilib bin/hello_cli.pl --name E2E --shout | grep -q "HELLO, E2E!"
-	@echo "e2e passed"
+	perl -Ilib bin/hello_cli.pl --name Test --shout | grep -q "HELLO, TEST!"
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Install PAR::Packer for fat binaries: cpan PAR::Packer"

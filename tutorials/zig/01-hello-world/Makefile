@@ -13,8 +13,8 @@ typecheck:
 	zig build test -Doptimize=Debug 2>&1 | head -1 || true
 
 e2e: build
-	./zig-out/bin/hello_world
-	./zig-out/bin/hello_world Zig
+	./zig-out/bin/hello_world World | grep -q "Hello, World!"
+	@echo "E2E: PASS"
 
 fatbin:
 	zig build -Doptimize=ReleaseSafe

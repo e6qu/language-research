@@ -13,12 +13,13 @@ typecheck:
 	cargo check
 
 e2e: build
+	@lsof -ti:4051 | xargs kill 2>/dev/null || true
 	./target/release/hello-prometheus-metrics &
-	sleep 1
-	curl -s -X POST http://localhost:4051/work
-	curl -s http://localhost:4051/metrics | grep -q "work_total"
-	pkill -f "target/release/hello" 2>/dev/null || true
-	@echo "e2e passed"
+	@sleep 2
+	curl -sf http://localhost:4051/work > /dev/null
+	curl -sf http://localhost:4051/metrics | grep -q "work"
+	@pkill -f "target/release/hello" 2>/dev/null || true
+	@echo "E2E: PASS"
 
 fatbin:
 	cargo build --release

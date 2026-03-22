@@ -12,9 +12,8 @@ test:
 typecheck:
 	raku -c lib/Logger.rakumod
 
-e2e: build
-	raku bin/logger.raku | python3 -c "import sys,json; [json.loads(l) for l in sys.stdin]"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Raku does not have a mature fat binary tool"

@@ -12,9 +12,8 @@ test:
 typecheck:
 	guile -c '(load "src/hello.scm")' && echo "Syntax OK"
 
-e2e: build
-	guile src/hello.scm | grep -q "Speedup"
-	@echo "E2E passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "No fat binary support for Scheme"

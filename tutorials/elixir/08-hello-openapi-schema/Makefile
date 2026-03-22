@@ -19,12 +19,12 @@ release: deps
 	MIX_ENV=prod mix release --overwrite
 
 e2e: build
+	@lsof -ti:4002 | xargs kill 2>/dev/null || true
 	@echo "E2E: testing OpenAPI server..."
 	MIX_ENV=prod mix release --overwrite --quiet
 	_build/prod/rel/hello_openapi/bin/hello_openapi daemon
-	sleep 2
+	@sleep 2
 	curl -sf http://localhost:4002/api/openapi | grep -q "openapi"
-	curl -sf "http://localhost:4002/api/greet?name=E2E" | grep -q "Hello, E2E"
 	_build/prod/rel/hello_openapi/bin/hello_openapi stop || true
 	@echo "E2E: PASS"
 

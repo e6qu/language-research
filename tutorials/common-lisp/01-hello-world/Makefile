@@ -14,8 +14,8 @@ typecheck:
 	sbcl --noinform --non-interactive --load src/hello.lisp --eval '(quit)' && echo "Syntax OK"
 
 e2e: build
-	sbcl --noinform --non-interactive --load src/hello.lisp --eval '(format t "~A~%" (hello:greet "E2E"))' --eval '(quit)' | grep -q "Hello, E2E!"
-	@echo "E2E passed"
+	sbcl --noinform --non-interactive --load src/hello.lisp --eval '(format t "~A~%" (hello:greet "World"))' --eval '(quit)' | grep -q "Hello, World!"
+	@echo "E2E: PASS"
 
 fatbin:
 	sbcl --noinform --non-interactive --load src/hello.lisp --eval '(sb-ext:save-lisp-and-die "hello" :toplevel (lambda () (format t "~A~%" (hello:greet)) (sb-ext:exit)) :executable t)'

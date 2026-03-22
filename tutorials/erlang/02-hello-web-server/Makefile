@@ -17,14 +17,14 @@ release:
 	rebar3 release
 
 e2e: build
+	@lsof -ti:8080 | xargs kill 2>/dev/null || true
 	@echo "E2E: testing web server..."
 	@erl -pa _build/default/lib/*/ebin -noshell -eval \
 		'application:ensure_all_started(hello_web), receive after infinity -> ok end.' &
 	@sleep 3
-	@curl -sf http://localhost:8080/ | grep -q "Hello, world"
-	@curl -sf http://localhost:8080/greet/E2E | grep -q "Hello, E2E"
+	curl -sf http://localhost:8080/ | grep -q "Hello, world!"
+	curl -sf http://localhost:8080/greet/Test | grep -q "Hello, Test!"
 	@pkill -f "beam.*hello_web" 2>/dev/null || pkill -f "_build/default/lib.*hello_web" 2>/dev/null || true
-	@sleep 1
 	@echo "E2E: PASS"
 
 fatbin:

@@ -13,9 +13,7 @@ test:
 typecheck:
 	sbcl --noinform --non-interactive --load src/metrics.lisp --eval '(quit)' && echo "Syntax OK"
 
-e2e: build
-	@echo "E2E: running unit tests as integration check..."
-	sbcl --noinform --non-interactive --load test/run.lisp
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin:

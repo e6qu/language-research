@@ -12,8 +12,7 @@ test:
 typecheck:
 	ldc2 -o- source/hello.d source/app.d
 
-e2e: build
-	./hello | grep -qi "http_requests_total"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin:

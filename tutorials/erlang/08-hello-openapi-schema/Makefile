@@ -14,8 +14,13 @@ typecheck:
 	rebar3 dialyzer
 
 e2e: build
-	@echo "E2E: testing openapi spec..."
-	erl -pa _build/default/lib/*/ebin -noshell -eval 'S = openapi_spec:spec(), V = maps:get(<<"openapi">>, S), io:format("~s~n", [V]), halt().' | grep -q "3.0"
+	@lsof -ti:8082 | xargs kill 2>/dev/null || true
+	@echo "E2E: testing openapi server..."
+	@erl -pa _build/default/lib/*/ebin -noshell -eval \
+		'application:ensure_all_started(hello_openapi), receive after infinity -> ok end.' &
+	@sleep 3
+	curl -sf http://localhost:8082/api/openapi | grep -q "openapi"
+	@pkill -f "beam.*hello_openapi" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin: build

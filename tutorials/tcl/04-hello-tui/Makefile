@@ -12,10 +12,8 @@ test:
 typecheck:
 	@echo "No static type checker configured (install nagelfar for checking)"
 
-e2e: build
-	@echo "TUI is interactive — verifying state logic via script"
-	@echo 'source src/tui_state.tcl; set s [tui_state::new]; set s [tui_state::move_down $$s]; puts [tui_state::selected_item $$s]' | tclsh | grep -q "Lua"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	cat src/*.tcl > hello_bundle.tcl

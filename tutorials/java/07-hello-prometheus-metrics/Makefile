@@ -14,12 +14,11 @@ typecheck:
 
 e2e: build
 	@lsof -ti:4071 | xargs kill 2>/dev/null || true
-	@sleep 1
 	java -cp target/*-jar-with-dependencies.jar hello.Main 4071 &
 	@sleep 2
-	curl -s http://localhost:4071/ | grep -q "Hello"
-	curl -s http://localhost:4071/metrics | grep -q "http_requests_total"
-	@kill %1 2>/dev/null || true
+	curl -sf http://localhost:4071/work > /dev/null
+	curl -sf http://localhost:4071/metrics | grep -q "work"
+	@pkill -f "hello.Main" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

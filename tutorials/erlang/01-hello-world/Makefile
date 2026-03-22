@@ -18,7 +18,7 @@ release:
 
 e2e: build
 	@echo "E2E: testing hello..."
-	erl -pa _build/default/lib/*/ebin -noshell -eval 'io:format("~s~n", [hello:greet(<<"E2E">>)]), halt().' | grep -q "Hello, E2E!"
+	erl -pa _build/default/lib/*/ebin -noshell -eval 'io:format("~s~n", [hello:greet(<<"World">>)]), halt().' | grep -q "Hello, World!"
 	@echo "E2E: PASS"
 
 fatbin:

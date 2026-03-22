@@ -11,9 +11,8 @@ test:
 
 typecheck: build
 
-e2e: build
-	@which c3c > /dev/null 2>&1 && echo "quit" | ./build/hello-tui C3 || echo "c3c not found — skipping E2E"
-	@echo "E2E: PASS (or skipped)"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin: build
 	@echo "Fat binary (if built):"

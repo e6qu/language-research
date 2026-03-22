@@ -13,8 +13,8 @@ typecheck:
 	@echo "No static type checker configured (install nagelfar for checking)"
 
 e2e: build
-	echo 'source src/hello.tcl; puts [hello::greet E2E]' | tclsh | grep -q "Hello, E2E!"
-	@echo "e2e passed"
+	echo 'source src/hello.tcl; puts [hello::greet World]' | tclsh | grep -q "Hello, World!"
+	@echo "E2E: PASS"
 
 fatbin:
 	cat src/*.tcl > hello_bundle.tcl

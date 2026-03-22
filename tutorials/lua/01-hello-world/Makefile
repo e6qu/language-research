@@ -13,8 +13,8 @@ typecheck:
 	@echo "No static type checker configured (install teal for type checking)"
 
 e2e: build
-	lua -e 'h=require("src.hello"); print(h.greet("E2E"))' | grep -q "Hello, E2E!"
-	@echo "e2e passed"
+	lua -e 'h=require("src.hello"); print(h.greet("World"))' | grep -q "Hello, World!"
+	@echo "E2E: PASS"
 
 LUA_STATIC_LIB = /opt/homebrew/lib/liblua.a
 LUA_INCLUDE = /opt/homebrew/include/lua

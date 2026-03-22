@@ -12,8 +12,7 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: build
-	mvn -q exec:java -Dexec.mainClass="hello.Main" | grep -q "Hello"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin:

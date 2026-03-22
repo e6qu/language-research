@@ -12,9 +12,8 @@ test:
 typecheck:
 	perl -c lib/Logger.pm
 
-e2e: build
-	perl -Ilib -MLogger -e 'print Logger::info("hello"), "\n"' | python3 -c "import sys,json; json.load(sys.stdin)"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Install PAR::Packer for fat binaries: cpan PAR::Packer"

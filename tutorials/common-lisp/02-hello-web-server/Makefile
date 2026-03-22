@@ -14,8 +14,13 @@ typecheck:
 	sbcl --noinform --non-interactive --load src/server.lisp --eval '(quit)' && echo "Syntax OK"
 
 e2e: build
-	@echo "E2E: running unit tests as integration check..."
-	sbcl --noinform --non-interactive --load test/run.lisp
+	@lsof -ti:4150 | xargs kill 2>/dev/null || true
+	@echo "E2E: starting server on port 4150..."
+	sbcl --noinform --non-interactive --load src/server.lisp --eval '(hello-web::start :port 4150)' &
+	@sleep 2
+	curl -sf http://localhost:4150/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4150/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "sbcl.*server.lisp" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

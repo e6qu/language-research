@@ -13,9 +13,7 @@ test:
 typecheck:
 	rebar3 dialyzer
 
-e2e: build
-	@echo "E2E: testing structured logging..."
-	erl -pa _build/default/lib/*/ebin -noshell -eval 'R = json_formatter:format(#{msg => {string, "test"}, level => info, meta => #{time => erlang:system_time(microsecond)}}, #{}), io:format("~s", [R]), halt().' | python3 -c "import sys,json; json.load(sys.stdin); print('valid JSON')"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin: build

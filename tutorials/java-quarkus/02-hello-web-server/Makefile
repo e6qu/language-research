@@ -12,11 +12,13 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: fatbin
+e2e: build
+	@lsof -ti:4090 | xargs kill 2>/dev/null || true
 	java -jar target/quarkus-app/quarkus-run.jar &
-	sleep 8
-	curl -sf http://localhost:4090/ | grep -q "Hello"
-	pkill -f "quarkus-run" 2>/dev/null || true
+	@sleep 8
+	curl -sf http://localhost:4090/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4090/greet/Test | grep -q "Hello, Test!"
+	@pkill -f "quarkus-run" 2>/dev/null || true
 	@echo "E2E: PASS"
 
 fatbin:

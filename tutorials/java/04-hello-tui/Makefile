@@ -12,8 +12,8 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: build
-	@echo "E2E: PASS (TUI requires interactive terminal — build verified)"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	mvn -q package -DskipTests

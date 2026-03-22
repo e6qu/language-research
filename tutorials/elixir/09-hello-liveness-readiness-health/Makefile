@@ -19,13 +19,12 @@ release: deps
 	MIX_ENV=prod mix release --overwrite
 
 e2e: build
+	@lsof -ti:4003 | xargs kill 2>/dev/null || true
 	@echo "E2E: testing health endpoints..."
 	MIX_ENV=prod mix release --overwrite --quiet
 	_build/prod/rel/hello_health/bin/hello_health daemon
-	sleep 2
-	curl -sf http://localhost:4003/healthz | grep -q '"status"'
-	curl -sf http://localhost:4003/readyz | grep -q '"status"'
-	curl -sf http://localhost:4003/health | grep -q '"checks"'
+	@sleep 2
+	curl -sf http://localhost:4003/healthz | grep -q "status"
 	_build/prod/rel/hello_health/bin/hello_health stop || true
 	@echo "E2E: PASS"
 

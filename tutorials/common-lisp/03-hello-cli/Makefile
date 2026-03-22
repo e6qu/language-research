@@ -15,9 +15,9 @@ typecheck:
 
 e2e: build
 	sbcl --noinform --non-interactive --load src/cli.lisp \
-	  --eval '(format t "~A~%" (hello-cli:greet "E2E" :shout t))' \
-	  --eval '(quit)' | grep -q "HELLO, E2E!"
-	@echo "E2E passed"
+	  --eval '(format t "~A~%" (hello-cli:greet "Test" :shout t))' \
+	  --eval '(quit)' | grep -q "HELLO, TEST!"
+	@echo "E2E: PASS"
 
 fatbin:
 	sbcl --noinform --non-interactive --load src/cli.lisp \

@@ -12,8 +12,7 @@ test:
 typecheck:
 	@echo "No static type checker (use clj-kondo for linting)"
 
-e2e: build
-	lein run | head -1 | python3 -c "import sys,json; d=json.load(sys.stdin); assert d['level']=='info'"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin:

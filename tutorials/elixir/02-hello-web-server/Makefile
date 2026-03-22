@@ -19,12 +19,13 @@ release: deps
 	MIX_ENV=prod mix release --overwrite
 
 e2e: build
+	@lsof -ti:4000 | xargs kill 2>/dev/null || true
 	@echo "E2E: testing web server..."
 	MIX_ENV=prod mix release --overwrite --quiet
 	_build/prod/rel/hello_web/bin/hello_web daemon
-	sleep 2
-	curl -sf http://localhost:4000/ | grep -q "Hello, world"
-	curl -sf http://localhost:4000/greet/E2E | grep -q "Hello, E2E"
+	@sleep 2
+	curl -sf http://localhost:4000/ | grep -q "Hello, world!"
+	curl -sf http://localhost:4000/greet/Test | grep -q "Hello, Test!"
 	_build/prod/rel/hello_web/bin/hello_web stop || true
 	@echo "E2E: PASS"
 

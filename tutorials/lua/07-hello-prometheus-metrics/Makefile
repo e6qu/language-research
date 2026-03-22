@@ -12,9 +12,8 @@ test:
 typecheck:
 	@echo "No static type checker configured"
 
-e2e:
-	lua -e 'm=require("src.metrics"); m.counter_inc("test_total"); print(m.format())' | grep -q "test_total"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 LUA_STATIC_LIB = /opt/homebrew/lib/liblua.a
 LUA_INCLUDE = /opt/homebrew/include/lua

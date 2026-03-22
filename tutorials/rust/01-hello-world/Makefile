@@ -13,8 +13,8 @@ typecheck:
 	cargo check
 
 e2e: build
-	./target/debug/hello-world | grep -q "Hello, World!"
-	@echo "e2e passed"
+	./target/release/hello-world World | grep -q "Hello, World!"
+	@echo "E2E: PASS"
 
 fatbin:
 	cargo build --release

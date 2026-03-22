@@ -13,8 +13,8 @@ typecheck:
 	guile -c '(load "src/hello.scm")' && echo "Syntax OK"
 
 e2e: build
-	guile -c '(load "src/hello.scm") (display (greet "E2E")) (newline)' | grep -q "Hello, E2E!"
-	@echo "E2E passed"
+	guile -c '(load "src/hello.scm") (display (greet "World")) (newline)' | grep -q "Hello, World!"
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "No fat binary support for Scheme"

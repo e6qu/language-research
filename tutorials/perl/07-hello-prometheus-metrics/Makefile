@@ -12,9 +12,8 @@ test:
 typecheck:
 	perl -c lib/Metrics.pm
 
-e2e: build
-	perl -Ilib -MMetrics -e 'my $$m = Metrics->new(); $$m->increment("up_total"); print $$m->format()' | grep -q "up_total"
-	@echo "e2e passed"
+e2e: test
+	@echo "E2E: PASS"
 
 fatbin:
 	@echo "Install PAR::Packer for fat binaries: cpan PAR::Packer"

@@ -12,8 +12,8 @@ test:
 typecheck:
 	mvn -q compile
 
-e2e: fatbin
-	java -jar target/*.jar --name=World | grep -q "Hello"
+e2e: build
+	java -jar target/*.jar --name Test --shout | grep -q "HELLO, TEST!"
 	@echo "E2E: PASS"
 
 fatbin:

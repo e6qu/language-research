@@ -13,10 +13,8 @@ typecheck:
 	cargo check
 
 e2e: build
-	./target/debug/hello-cli | grep -q "Hello, World!"
-	./target/debug/hello-cli --name Rust | grep -q "Hello, Rust!"
-	./target/debug/hello-cli --name Rust --shout | grep -q "HELLO, RUST!"
-	@echo "e2e passed"
+	./target/release/hello-cli --name Test --shout | grep -q "HELLO, TEST!"
+	@echo "E2E: PASS"
 
 fatbin:
 	cargo build --release

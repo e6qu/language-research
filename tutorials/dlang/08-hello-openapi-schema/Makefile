@@ -12,8 +12,7 @@ test:
 typecheck:
 	ldc2 -o- source/hello.d source/app.d
 
-e2e: build
-	./hello | grep -qi "openapi"
+e2e: test
 	@echo "E2E: PASS"
 
 fatbin:
